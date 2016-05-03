@@ -1,0 +1,232 @@
+<project basedir="." default="compile">
+  <property name="src.dir" location="src" />
+  <property name="lib.dir"   value="lib" />
+  <property name="build.dir" location="build" />
+  <property name="report.dir" location="report" />
+
+  <path id="classpath">
+    <fileset dir="${lib.dir}" includes="*.jar"/>
+  </path>
+
+  <path id="tests-prelab">
+    <fileset dir="${build.dir}">
+      <include name="ece351/Test*" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-1">
+    <fileset dir="${build.dir}">
+      <include name="ece351/w/rdescent/Test*" />
+      <include name="ece351/w/regex/Test*" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-2">
+    <fileset dir="${build.dir}">
+      <include name="ece351/w/svg/TestW2SVG*" />
+      <include name="ece351/objectcontract/TestObjectContract.class" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-3">
+    <fileset dir="${build.dir}">
+      <include name="ece351/f/rdescent/TestFRDRecognizer*" />
+      <include name="ece351/f/TestObjectContractF*" />
+      <include name="ece351/f/rdescent/TestFRDParser*" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-4">
+    <fileset dir="${build.dir}">
+      <include name="ece351/f/TestSimplifier*" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-5">
+    <fileset dir="${build.dir}">
+      <include name="ece351/w/parboiled/TestWParboiled*" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-6">
+    <fileset dir="${build.dir}">
+      <include name="ece351/f/parboiled/TestFParboiledRecognizer*" />
+      <include name="ece351/f/parboiled/TestFParboiledParser*" />
+      <include name="ece351/f/parboiled/TestFParserComparison.class" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-7">
+    <fileset dir="${build.dir}">
+      <include name="ece351/f/TestTechnologyMapper.class" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-8">
+    <fileset dir="${build.dir}">
+      <include name="ece351/f/TestSimulatorGenerator.class" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-9">
+    <fileset dir="${build.dir}">
+      <include name="ece351/vhdl/test/TestVRecognizer*" />
+      <include name="ece351/vhdl/test/TestVParser.class" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-10">
+    <fileset dir="${build.dir}">
+      <include name="ece351/vhdl/test/TestDeSugarer.class" />
+      <include name="ece351/vhdl/test/TestElaborator.class" />
+    </fileset>
+  </path>
+
+  <path id="tests-lab-11">
+    <fileset dir="${build.dir}">
+      <include name="ece351/vhdl/test/TestSplitter.class" />
+      <include name="ece351/vhdl/test/TestSynthesizer.class" />
+    </fileset>
+  </path>
+
+  <target name="compile" description="Compile the source">
+    <mkdir dir="${build.dir}" />
+    <javac srcdir="${src.dir}" destdir="${build.dir}"  classpathref="classpath"
+           includeantruntime="true" failonerror="false">
+      <compilerarg value="-Xlint:unchecked" />
+    </javac>
+  </target>
+
+  <macrodef name="test">
+    <attribute name="refid" />
+    <sequential>
+      <junit fork="yes" timeout="100000">
+        <jvmarg value="-ea" />
+        <classpath>
+          <path refid="classpath" />
+          <path location="${build.dir}" />
+        </classpath>
+        <formatter type="brief" usefile="false" />
+        <batchtest>
+          <path refid="@{refid}" />
+        </batchtest>
+      </junit>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="report">
+    <attribute name="refid" />
+    <attribute name="folder" />
+    <sequential>
+      <mkdir dir="${report.dir}/@{folder}" />
+      <junit fork="yes" timeout="100000">
+        <jvmarg value="-ea" />
+        <classpath>
+          <path refid="classpath" />
+          <path location="${build.dir}" />
+        </classpath>
+        <formatter classname="ece351.util.CSVFormatter" extension=".csv" />
+        <batchtest todir="${report.dir}/@{folder}">
+          <path refid="@{refid}" />
+        </batchtest>
+      </junit>
+    </sequential>
+  </macrodef>
+
+  <target name="test-prelab" depends="compile" description="Test Prelab">
+    <test refid="tests-prelab" />
+  </target>
+
+  <target name="test-lab-1" depends="compile" description="Test Lab 1">
+    <test refid="tests-lab-1" />
+  </target>
+
+  <target name="report-lab-1" depends="compile" description="Report Lab 1">
+    <report refid="tests-lab-1" folder="lab-1" />
+  </target>
+
+  <target name="test-lab-2" depends="compile" description="Test Lab 2">
+    <test refid="tests-lab-2" />
+  </target>
+
+  <target name="report-lab-2" depends="compile" description="Report Lab 2">
+    <report refid="tests-lab-2" folder="lab-2" />
+  </target>
+
+  <target name="test-lab-3" depends="compile" description="Test Lab 3">
+    <test refid="tests-lab-3" />
+  </target>
+
+  <target name="report-lab-3" depends="compile" description="Report Lab 3">
+    <report refid="tests-lab-3" folder="lab-3" />
+  </target>
+
+  <target name="test-lab-4" depends="compile" description="Test Lab 4">
+    <test refid="tests-lab-4" />
+  </target>
+
+  <target name="report-lab-4" depends="compile" description="Report Lab 4">
+    <report refid="tests-lab-4" folder="lab-4" />
+  </target>
+
+  <target name="test-lab-5" depends="compile" description="Test Lab 5">
+    <test refid="tests-lab-5" />
+  </target>
+
+  <target name="report-lab-5" depends="compile" description="Report Lab 5">
+    <report refid="tests-lab-5" folder="lab-5" />
+  </target>
+
+  <target name="test-lab-6" depends="compile" description="Test Lab 6">
+    <test refid="tests-lab-6" />
+  </target>
+
+  <target name="report-lab-6" depends="compile" description="Report Lab 6">
+    <report refid="tests-lab-6" folder="lab-6" />
+  </target>
+
+  <target name="test-lab-7" depends="compile" description="Test Lab 7">
+    <test refid="tests-lab-7" />
+  </target>
+
+  <target name="report-lab-7" depends="compile" description="Report Lab 7">
+    <report refid="tests-lab-7" folder="lab-7" />
+  </target>
+
+  <target name="test-lab-8" depends="compile" description="Test Lab 8">
+    <test refid="tests-lab-8" />
+  </target>
+
+  <target name="report-lab-8" depends="compile" description="Report Lab 8">
+    <report refid="tests-lab-8" folder="lab-8" />
+  </target>
+
+  <target name="test-lab-9" depends="compile" description="Test Lab 9">
+    <test refid="tests-lab-9" />
+  </target>
+
+  <target name="report-lab-9" depends="compile" description="Report Lab 9">
+    <report refid="tests-lab-9" folder="lab-9" />
+  </target>
+
+  <target name="test-lab-10" depends="compile" description="Test Lab 10">
+    <test refid="tests-lab-10" />
+  </target>
+
+  <target name="report-lab-10" depends="compile" description="Report Lab 10">
+    <report refid="tests-lab-10" folder="lab-10" />
+  </target>
+
+  <target name="test-lab-11" depends="compile" description="Test Lab 11">
+    <test refid="tests-lab-11" />
+  </target>
+
+  <target name="report-lab-11" depends="compile" description="Report Lab 11">
+    <report refid="tests-lab-11" folder="lab-11" />
+  </target>
+
+  <target name="clean" description="Clean up build">
+    <delete dir="${build.dir}" />
+    <delete dir="${report.dir}" />
+  </target>
+</project>
