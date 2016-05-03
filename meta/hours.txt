@@ -1,0 +1,18 @@
+# An estimate of the number of hours you spent on each lab or assignment.
+# lab0 is pre-lab / computing environment.
+# This information will not be used in determining your grade.
+# This information will be used to adjust the workload.
+# Round to the nearest natural number please (i.e., integer greater than 0).
+# Comment lines start with an octothorpe (#), per the Unix convention.
+# The actual data lines do not start with octothorpe (#).
+lab0 0
+lab1 0
+lab2 0
+lab3 0
+lab4 0
+lab5 0
+lab6 0
+lab7 0
+lab8 0
+lab9 0
+lab10 0

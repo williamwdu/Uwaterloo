@@ -1,0 +1,23 @@
+# Lines that start with "#" are comments, following the Unix convention
+# Indicate your collaborators in this file. 
+# If you collaborate with multiple people on a lab, make a new line
+# in this file for each lab/role/person combination.
+# A data line has three words, of the form:
+# labX role userid
+# Possible values for role are: mentor, protege, partner, converser
+# "Converser" is a noun that means a person you talk with.
+# There is no mark cap for having conversations [see course outline].
+# Write the userid "nobody" if you did not speak with anyone.
+# If you have multiple collaborators for a given lab, use multiple lines
+# You should have at least one line for each lab.
+lab0 role userid
+lab1 role userid
+lab2 role userid
+lab3 role userid
+lab4 role userid
+lab5 role userid
+lab6 role userid
+lab7 role userid
+lab8 role userid
+lab9 role userid
+lab10 role userid
