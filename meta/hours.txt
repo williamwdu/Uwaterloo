@@ -5,7 +5,7 @@
 # Round to the nearest natural number please (i.e., integer greater than 0).
 # Comment lines start with an octothorpe (#), per the Unix convention.
 # The actual data lines do not start with octothorpe (#).
-lab0 0
+lab0 2
 lab1 0
 lab2 0
 lab3 0
