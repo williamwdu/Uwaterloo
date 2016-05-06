@@ -40,44 +40,38 @@ class TestWRegexSimpleData {
 		// r2.wave
 		// Copy the regex from above and paste it here.
 		// Generalize the regex to accept multiple input values, either 0 or 1.
-// TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		regexs.add("A: 0;\\s*");
+		// TODO: short code snippet
 
 		// r3.wave
 		// Copy the regex from above and paste it here.
 		// Generalize the regex to allow whitespace between the last signal and the semi-colon.
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 
 		// r4.wave
 		// Copy the regex from above and paste it here.
 		// Generalize the regex to allow multi-character pin names.
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 
 		// r5.wave
 		// Copy the regex from above and paste it here.
 		// Generalize the regex to allow lower case in pin names.
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 
 		// r6.wave
 		// Copy the regex from above and paste it here.
 		// Generalize the regex to allow multiple spaces between values.
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 
 		// r7.wave
 		// Copy the regex from above and paste it here.
 		// Generalize the regex for whitespace again.
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 
 		// r8.wave
 		// Copy the regex from above and paste it here.
 		// Generalize the regex to allow multiple pins
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 		
 	};
 	

@@ -61,6 +61,9 @@ public final class WRecursiveDescentRecognizer {
 
     public void waveform() {
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+    lexer.consumeID();
+    lexer.consume(*:*);
+    bits();
+    lexer.consume(*;*);
     }
 }
