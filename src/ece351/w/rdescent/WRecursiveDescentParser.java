@@ -47,6 +47,38 @@ public final class WRecursiveDescentParser {
     public WProgram parse() {
     	// STUB: return null;
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+    	WProgram wpg = new WProgram();
+    	while (!lexer.inspectEOF()){
+        Waveform wav = new Waveform();
+        String str = "";
+    	while (lexer.inspectID()){
+        	str = lexer.consumeID();
+        }
+    	wav = wav.rename(str);
+        if(lexer.inspect(":")){
+        	lexer.consume(":");
+        }
+        else{
+        	lexer.consume(" ");
+        }
+        while(!lexer.inspect(";")){
+        	if (lexer.inspect(" "))
+        	{
+        		lexer.consume(" ");
+        	}
+        	if(lexer.inspect("1","0")){
+        		str = lexer.consume("0","1");
+        		wav = wav.append(str);
+        	}
+        	else{
+        		str = lexer.consume("0","1");
+        		wav = wav.append(str);
+        	}
+        }
+        lexer.consume(";");
+        wpg = wpg.append(wav);
+    	}
+    	return wpg;
+        }
     }
-}
+
