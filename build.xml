@@ -17,7 +17,8 @@
   <path id="tests-lab-1">
     <fileset dir="${build.dir}">
       <include name="ece351/w/rdescent/Test*" />
-      <include name="ece351/w/regex/Test*" />
+      <include name="ece351/w/regex/TestWRegexAccept" />
+      <include name="ece351/w/regex/TestWRegexReject" />
     </fileset>
   </path>
 
