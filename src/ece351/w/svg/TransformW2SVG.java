@@ -34,7 +34,7 @@ import ece351.util.CommandLine;
 import ece351.util.Debug;
 import ece351.w.ast.WProgram;
 import ece351.w.ast.Waveform;
-import ece351.w.parboiled.WParboiledParser;
+//import ece351.w.parboiled.WParboiledParser;
 import ece351.w.rdescent.WRecursiveDescentParser;
 
 public final class TransformW2SVG {
@@ -50,7 +50,8 @@ public final class TransformW2SVG {
 	public static void main(final CommandLine c) {
 		final WProgram wp;
 		if (c.parbparser) {
-			wp = WParboiledParser.parse(c.readInputSpec());
+//			wp = WParboiledParser.parse(c.readInputSpec());
+			wp = null;
 		} else if (c.handparser) {
 			wp = WRecursiveDescentParser.parse(c.readInputSpec());
 		} else {
