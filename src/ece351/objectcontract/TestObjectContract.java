@@ -41,7 +41,7 @@ public final class TestObjectContract extends TestObjectContractBase {
 		return new Object() {
 			public boolean equals(Object ob) { 
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+				return false;
 			}
 		};
 	}
@@ -55,7 +55,7 @@ throw new ece351.util.Todo351Exception();
 		return new Object() {
 			public boolean equals(Object ob) { 
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+				return true;
 			}
 		};
 	}
