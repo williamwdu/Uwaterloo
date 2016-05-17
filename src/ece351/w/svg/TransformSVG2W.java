@@ -65,18 +65,48 @@ public final class TransformSVG2W {
 		// lines are taken off the global list and added to the extract list
 		// then the extract list is used to construct a new waveform object 
 		// finally, the extract list is cleared and the process repeats
+		setY.add(lines.get(0).y1);
 		while(!lines.isEmpty()) {
-			final Line line = lines.remove(0);
-
+			final Line line = lines.get(0);
+			if (setY.contains(line.y1)){
+				if(setY.contains(line.y2)){
+					extract.add(line);
+					lines.remove(0);
+					System.out.println("add x1="+line.x1);
+				}
+				else{
+					setY.add(line.y2);
+					extract.add(line);
+					lines.remove(0);
+					System.out.println("add x1="+line.x1);
+				}
+			}
+			else{
+				if(setY.contains(line.y2)){
+					setY.add(line.y1);
+					extract.add(line);
+					lines.remove(0);
+					System.out.println("add x1="+line.x1);
+				}
+				else{
+					waveforms = waveforms.append(transformLinesToWaveform(extract, pins));
+					extract.clear();
+					setY.clear();
+					setY.add(line.y1);
+					pins.remove(0);
+					System.out.println("transformLinesToWaveform");
+				}
+			}
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
 		}
 
 		// the last waveform
 		if(!extract.isEmpty()) {
 			waveforms = waveforms.append(transformLinesToWaveform(extract, pins));
+			System.out.println("last waveformm transformLinesToWaveform");
+			
 		}
-
+		System.out.println("push + " + waveforms);
 		return new WProgram(waveforms);
 	}
 
@@ -91,21 +121,35 @@ throw new ece351.util.Todo351Exception();
 
 		// Place holder for the list of bits.
 		ImmutableList<String> bits = ImmutableList.of();
-
+		ArrayList<String> list = new ArrayList<>();
 		// The first line of the waveform.
 		final Line first = lines.get(0);
 
 		for(int i = 1; i < lines.size(); i++) {
+			Line current = lines.get(i);
+			if (current.x1 == current.x2){
+			}
+			else{
+				if (current.y2 > first.y1){
+				list.add("0");
+				System.out.print("0");
+				}
+				else{
+					list.add("1");
+					System.out.print("1");
+
+				}
+			}
 			// If a dot, skip it.
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
 		}
 
 		// Get the corresponding id for this waveform.
-		String id = "UNKNOWN";
-		//return new Waveform(bits, id); // construct a new waveform object
+		String id = pins.get(0).id;
+		bits = ImmutableList.copyOf(list);
+		System.out.println(id);
+		return new Waveform(bits, id); // construct a new waveform object
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
 
 	}
 

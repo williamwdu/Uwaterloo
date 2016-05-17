@@ -120,7 +120,7 @@ public final class TransformW2SVG {
 					int x1 = x;
 					int x2 = x1;
 					int y1 = y_prev;
-					int y2 = y_mid + y_off;
+					int y2 = y_mid - y_off;
 					y_prev = y2;
 					out.println(Line.toSVG(x1, y1, x2, y2));
 				}
@@ -128,7 +128,7 @@ public final class TransformW2SVG {
 					int x1 = x;
 					int x2 = x1;
 					int y1 = y_prev;
-					int y2 = y_mid - y_off;
+					int y2 = y_mid + y_off;
 					y_prev = y2;
 					out.println(Line.toSVG(x1, y1, x2, y2));
 				}

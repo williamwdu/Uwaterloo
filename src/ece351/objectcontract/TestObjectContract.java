@@ -26,6 +26,8 @@
 
 package ece351.objectcontract;
 
+import ece351.objectcontract.TestObjectContractBase.SymmetryBreaker;
+
 
 
 
@@ -70,7 +72,14 @@ public final class TestObjectContract extends TestObjectContractBase {
 			private boolean flag = true;
 			public boolean equals(Object ob) { 
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+				if (flag == true){
+					flag = false;
+					return true;
+				}
+				else{
+					flag = true;
+					return false;
+				}
 			}
 		};
 	}
@@ -81,8 +90,12 @@ throw new ece351.util.Todo351Exception();
 	@Override
 	SymmetryBreaker[] constructSymmetryBreakers() {
 		final SymmetryBreaker[] result = new SymmetryBreaker[2];
-// TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		SymmetryBreaker a = new SymmetryBreaker(1,null);
+		SymmetryBreaker contrarian = new SymmetryBreaker(1,a);
+		result[0] = a;
+		result[1] = contrarian;
+		return result;
+		// TODO: short code snippet
 	}
 
 	
@@ -93,8 +106,12 @@ throw new ece351.util.Todo351Exception();
 	TransitivityBreaker[] constructTransitivityBreakers() {
 		final double epsilon6 = TestObjectContractBase.TransitivityBreaker.epsilon * 0.6d;
 		final TransitivityBreaker[] result = new TransitivityBreaker[3];
+		result[0] = new TransitivityBreaker(epsilon6);
+		result[1] = new TransitivityBreaker(epsilon6*2);
+		result[2] = new TransitivityBreaker(epsilon6*3);
+		return result;
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		
 	}
 
 	/**
@@ -107,7 +124,10 @@ throw new ece351.util.Todo351Exception();
 	Object[] constructHashcodeConsistencyViolators() {
 		final Object[] result = new Object[2];
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		final double epsilon6 = TestObjectContractBase.TransitivityBreaker.epsilon * 0.6d;
+		result[0] = new TransitivityBreaker(epsilon6);
+		result[1] = new TransitivityBreaker(epsilon6*2);
+		return result;
 	}
 
 	/**
@@ -117,7 +137,12 @@ throw new ece351.util.Todo351Exception();
 	@Override
 	boolean checkNotEqualsNull(final Object obj) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		if (obj.equals(null)){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 
 	/**
@@ -127,7 +152,12 @@ throw new ece351.util.Todo351Exception();
 	@Override
 	boolean checkEqualsIsReflexive(final Object obj) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		if (obj.equals(obj)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
@@ -140,7 +170,22 @@ throw new ece351.util.Todo351Exception();
 	@Override
 	boolean checkEqualsIsSymmetric(final Object o1, final Object o2) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		if (o1.equals(o2)){
+			if(o2.equals(o1)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			if(o2.equals(o1)){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
 	}
 
 	/**
@@ -153,7 +198,22 @@ throw new ece351.util.Todo351Exception();
 	@Override
 	boolean checkEqualsIsTransitive(final Object o1, final Object o2, final Object o3) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		if (o1.equals(o2)){
+			if (o2.equals(o3)){
+				if (o1.equals(o3)){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
@@ -168,6 +228,21 @@ throw new ece351.util.Todo351Exception();
 	@Override
 	boolean checkHashcodeIsConsistent(final Object o1, final Object o2) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		if (o1.equals(o2)){
+		if (o1.hashCode() == o2.hashCode()){
+			return true;
+		}
+		else{
+			return false;
+		}
+		}
+		else{
+			if (o1.hashCode() == o2.hashCode()){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
 	}
 }
