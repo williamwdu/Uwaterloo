@@ -107,6 +107,7 @@ public final class TransformW2SVG {
 
 			// advance the x position to start drawing
 			x=100;
+			
 
 			// loop on bits
 			for (final String bit : w.bits) {
@@ -114,13 +115,36 @@ public final class TransformW2SVG {
 				// draw the vertical line
 				// draw the horizontal line
 				// get ready for the next bit
-// TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+				// TODO: longer code snippet
+				if (bit == "1"){
+					int x1 = x;
+					int x2 = x1;
+					int y1 = y_prev;
+					int y2 = y_mid + y_off;
+					y_prev = y2;
+					out.println(Line.toSVG(x1, y1, x2, y2));
+				}
+				else{
+					int x1 = x;
+					int x2 = x1;
+					int y1 = y_prev;
+					int y2 = y_mid - y_off;
+					y_prev = y2;
+					out.println(Line.toSVG(x1, y1, x2, y2));
+				}
+				int x1 = x;
+				int x2 = x1 + WIDTH;
+				x = x2;
+				int y1 = y_prev;
+				int y2 = y1;
+				out.println(Line.toSVG(x1, y1, x2, y2));
 			}
 			
 			// advance the y position for the next pin
-// TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+			// TODO: short code snippet
+			y_pos = y_pos + 3*y_off;
+			y_prev = y_pos;
+			y_mid = y_pos;
 
 		}
 
