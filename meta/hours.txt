@@ -7,7 +7,7 @@
 # The actual data lines do not start with octothorpe (#).
 lab0 2
 lab1 7
-lab2 0
+lab2 6
 lab3 0
 lab4 0
 lab5 0
