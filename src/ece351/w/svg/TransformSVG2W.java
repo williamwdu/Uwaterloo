@@ -72,13 +72,13 @@ public final class TransformSVG2W {
 				if(setY.contains(line.y2)){
 					extract.add(line);
 					lines.remove(0);
-					System.out.println("add x1="+line.x1);
+					//System.out.println("add x1="+line.x1);
 				}
 				else{
 					setY.add(line.y2);
 					extract.add(line);
 					lines.remove(0);
-					System.out.println("add x1="+line.x1);
+					//System.out.println("add x1="+line.x1);
 				}
 			}
 			else{
@@ -86,7 +86,7 @@ public final class TransformSVG2W {
 					setY.add(line.y1);
 					extract.add(line);
 					lines.remove(0);
-					System.out.println("add x1="+line.x1);
+					//System.out.println("add x1="+line.x1);
 				}
 				else{
 					waveforms = waveforms.append(transformLinesToWaveform(extract, pins));
@@ -94,7 +94,7 @@ public final class TransformSVG2W {
 					setY.clear();
 					setY.add(line.y1);
 					pins.remove(0);
-					System.out.println("transformLinesToWaveform");
+					//System.out.println("transformLinesToWaveform");
 				}
 			}
 // TODO: longer code snippet
@@ -103,10 +103,10 @@ public final class TransformSVG2W {
 		// the last waveform
 		if(!extract.isEmpty()) {
 			waveforms = waveforms.append(transformLinesToWaveform(extract, pins));
-			System.out.println("last waveformm transformLinesToWaveform");
+			//System.out.println("last waveformm transformLinesToWaveform");
 			
 		}
-		System.out.println("push + " + waveforms);
+		//System.out.println("push + " + waveforms);
 		return new WProgram(waveforms);
 	}
 
@@ -132,11 +132,11 @@ public final class TransformSVG2W {
 			else{
 				if (current.y2 > first.y1){
 				list.add("0");
-				System.out.print("0");
+				//System.out.print("0");
 				}
 				else{
 					list.add("1");
-					System.out.print("1");
+					//System.out.print("1");
 
 				}
 			}
@@ -147,7 +147,7 @@ public final class TransformSVG2W {
 		// Get the corresponding id for this waveform.
 		String id = pins.get(0).id;
 		bits = ImmutableList.copyOf(list);
-		System.out.println(id);
+		//System.out.println(id);
 		return new Waveform(bits, id); // construct a new waveform object
 // TODO: longer code snippet
 
