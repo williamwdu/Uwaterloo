@@ -210,8 +210,6 @@ throw new ece351.util.Todo351Exception();
 		// note: we do not assert repOk() here because the rep might not be ok
 		// the result might contain duplicate children, and the children
 		// might be out of order
-// TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
 		return this; // TODO: replace this stub
 	}
 

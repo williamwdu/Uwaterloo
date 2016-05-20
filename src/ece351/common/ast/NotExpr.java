@@ -47,8 +47,6 @@ public final class NotExpr extends UnaryExpr{
     		// !!x = x
     		// nothing changed
     		// something changed
-// TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
     	return this; // TODO: replace this stub
     }
 	
