@@ -54,6 +54,7 @@ public final class FParser {
     }
     
     private static FProgram parboiledParse(final String input) {
-    	return FParboiledParser.parse(input);
+        // return FParboiledParser.parse(input);
+        throw new UnsupportedOperationException("FParboiledParser not available until Lab5");
     }
 }
