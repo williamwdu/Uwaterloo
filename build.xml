@@ -17,8 +17,9 @@
   <path id="tests-lab-1">
     <fileset dir="${build.dir}">
       <include name="ece351/w/rdescent/Test*" />
-      <include name="ece351/w/regex/TestWRegexAccept" />
-      <include name="ece351/w/regex/TestWRegexReject" />
+      <include name="ece351/w/regex/TestWRegexSimple.class" />
+      <include name="ece351/w/regex/TestWRegexAccept.class" />
+      <include name="ece351/w/regex/TestWRegexReject.class" />
     </fileset>
   </path>
 
@@ -32,14 +33,14 @@
   <path id="tests-lab-3">
     <fileset dir="${build.dir}">
       <include name="ece351/f/rdescent/TestFRDRecognizer*" />
-      <include name="ece351/f/TestObjectContractF*" />
+      <include name="ece351/f/test/TestObjectContractF*" />
       <include name="ece351/f/rdescent/TestFRDParser*" />
     </fileset>
   </path>
 
   <path id="tests-lab-4">
     <fileset dir="${build.dir}">
-      <include name="ece351/f/TestSimplifier*" />
+      <include name="ece351/f/simplifier/TestSimplifier*" />
     </fileset>
   </path>
 
@@ -59,13 +60,13 @@
 
   <path id="tests-lab-7">
     <fileset dir="${build.dir}">
-      <include name="ece351/f/TestTechnologyMapper.class" />
+      <include name="ece351/f/techmapper/TestTechnologyMapper.class" />
     </fileset>
   </path>
 
   <path id="tests-lab-8">
     <fileset dir="${build.dir}">
-      <include name="ece351/f/TestSimulatorGenerator.class" />
+      <include name="ece351/f/simgen/TestSimulatorGenerator.class" />
     </fileset>
   </path>
 
