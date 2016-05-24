@@ -55,6 +55,8 @@ public abstract class AbstractTestF extends BaseTest351 {
 		m.put("cse3", make_cse3());
 		m.put("cse4", make_cse4());
 		m.put("cse5", make_cse5());
+		m.put("cse6", make_cse6());
+		m.put("cse7", make_cse7());
 		m.put("ex00", make_ex00());
 		m.put("ex01", make_ex01());
 		m.put("ex02", make_ex02());
@@ -72,6 +74,7 @@ public abstract class AbstractTestF extends BaseTest351 {
 		m.put("jvarty_advanced", make_jvarty_advanced());
 		m.put("jvarty_basic", make_jvarty_basic());
 		m.put("nary_or", make_nary_or());
+		m.put("not_a_or_not_b", make_not_a_or_not_b());
 		m.put("opt0_and_nested_or", make_opt0_and_nested_or());
 		m.put("opt0_left_parens", make_opt0_left_parens());
 		m.put("opt0_nested_and", make_opt0_nested_and());
@@ -79,43 +82,30 @@ public abstract class AbstractTestF extends BaseTest351 {
 		m.put("opt0_no_parens", make_opt0_no_parens());
 		m.put("opt0_not_or", make_opt0_not_or());
 		m.put("opt0_right_parens", make_opt0_right_parens());
-		m.put("opt1_and_false1", make_opt1_and_false1());
-		m.put("opt1_and_false2", make_opt1_and_false2());
 		m.put("opt1_and_true1", make_opt1_and_true1());
 		m.put("opt1_and_true2", make_opt1_and_true2());
-		m.put("opt1_false_and_false", make_opt1_false_and_false());
-		m.put("opt1_false_and_true", make_opt1_false_and_true());
-		m.put("opt1_false_or_false", make_opt1_false_or_false());
-		m.put("opt1_false_or_true", make_opt1_false_or_true());
-		m.put("opt1_not_false", make_opt1_not_false());
-		m.put("opt1_not_false_and_true", make_opt1_not_false_and_true());
-		m.put("opt1_not_false_or_false", make_opt1_not_false_or_false());
-		m.put("opt1_not_false_or_true", make_opt1_not_false_or_true());
-		m.put("opt1_not_true", make_opt1_not_true());
-		m.put("opt1_not_true_and_false", make_opt1_not_true_and_false());
-		m.put("opt1_not_true_or_false", make_opt1_not_true_or_false());
 		m.put("opt1_or_false1", make_opt1_or_false1());
 		m.put("opt1_or_false2", make_opt1_or_false2());
-		m.put("opt1_or_true1", make_opt1_or_true1());
-		m.put("opt1_or_true2", make_opt1_or_true2());
-		m.put("opt1_true_and_false", make_opt1_true_and_false());
-		m.put("opt1_true_and_true", make_opt1_true_and_true());
-		m.put("opt1_true_or_false", make_opt1_true_or_false());
-		m.put("opt1_true_or_true", make_opt1_true_or_true());
-		m.put("opt2_and1", make_opt2_and1());
-		m.put("opt2_and2", make_opt2_and2());
-		m.put("opt2_or1", make_opt2_or1());
-		m.put("opt2_or2", make_opt2_or2());
-		m.put("opt3_and_dup", make_opt3_and_dup());
-		m.put("opt3_or_dup", make_opt3_or_dup());
-		m.put("opt4_and_or", make_opt4_and_or());
-		m.put("opt4_and_or2", make_opt4_and_or2());
-		m.put("opt4_big1", make_opt4_big1());
-		m.put("opt4_big2", make_opt4_big2());
-		m.put("opt4_or_and", make_opt4_or_and());
-		m.put("opt4_or_no_paren", make_opt4_or_no_paren());
-		m.put("opt5_fixed_point", make_opt5_fixed_point());
-		m.put("opt5_not_and", make_opt5_not_and());
+		m.put("opt2_and_false1", make_opt2_and_false1());
+		m.put("opt2_and_false2", make_opt2_and_false2());
+		m.put("opt2_or_true1", make_opt2_or_true1());
+		m.put("opt2_or_true2", make_opt2_or_true2());
+		m.put("opt3_not_false", make_opt3_not_false());
+		m.put("opt3_not_not", make_opt3_not_not());
+		m.put("opt3_not_true", make_opt3_not_true());
+		m.put("opt4_and_complement1", make_opt4_and_complement1());
+		m.put("opt4_and_complement2", make_opt4_and_complement2());
+		m.put("opt4_or_complement1", make_opt4_or_complement1());
+		m.put("opt4_or_complement2", make_opt4_or_complement2());
+		m.put("opt4_or_complement3", make_opt4_or_complement3());
+		m.put("opt5_and_dup", make_opt5_and_dup());
+		m.put("opt5_or_dup", make_opt5_or_dup());
+		m.put("opt6_and_or", make_opt6_and_or());
+		m.put("opt6_and_or2", make_opt6_and_or2());
+		m.put("opt6_or_and", make_opt6_or_and());
+		m.put("opt6_or_no_paren", make_opt6_or_no_paren());
+		m.put("opt7_big1", make_opt7_big1());
+		m.put("opt7_big2", make_opt7_big2());
 		m.put("z01", make_z01());
 		m.put("z02", make_z02());
 		m.put("z03", make_z03());
@@ -184,6 +174,25 @@ public abstract class AbstractTestF extends BaseTest351 {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(new AndExpr(new VarExpr("a"), new VarExpr("b")), new AndExpr(new VarExpr("c"), new VarExpr("d")))));
 		fp = fp.append(new AssignmentStatement("y", new OrExpr(new AndExpr(new VarExpr("e"), new VarExpr("f")), new AndExpr(new VarExpr("b"), new VarExpr("a")))));
+		assert fp.repOk();
+		return fp;
+	}
+
+	@Test public void cse6() {test("cse6", FPROGRAMS.get("cse6"));}
+	protected static FProgram make_cse6() {
+		FProgram fp = new FProgram();
+		fp = fp.append(new AssignmentStatement("x", new OrExpr(new NotExpr(new VarExpr("a")), new NotExpr(new VarExpr("b")))));
+		fp = fp.append(new AssignmentStatement("y", new NotExpr(new AndExpr(new VarExpr("a"), new VarExpr("b")))));
+		assert fp.repOk();
+		return fp;
+	}
+
+	@Test public void cse7() {test("cse7", FPROGRAMS.get("cse7"));}
+	protected static FProgram make_cse7() {
+		FProgram fp = new FProgram();
+		fp = fp.append(new AssignmentStatement("x", new AndExpr(new VarExpr("a"), new OrExpr(new VarExpr("b"), new VarExpr("c")))));
+		fp = fp.append(new AssignmentStatement("y", new AndExpr(new VarExpr("a"), new VarExpr("b"))));
+		fp = fp.append(new AssignmentStatement("z", new AndExpr(new VarExpr("a"), new VarExpr("c"))));
 		assert fp.repOk();
 		return fp;
 	}
@@ -345,6 +354,14 @@ public abstract class AbstractTestF extends BaseTest351 {
 		return fp;
 	}
 
+	@Test public void not_a_or_not_b() {test("not_a_or_not_b", FPROGRAMS.get("not_a_or_not_b"));}
+	protected static FProgram make_not_a_or_not_b() {
+		FProgram fp = new FProgram();
+		fp = fp.append(new AssignmentStatement("x", new OrExpr(new NotExpr(new VarExpr("a")), new NotExpr(new VarExpr("b")))));
+		assert fp.repOk();
+		return fp;
+	}
+
 	@Test public void opt0_and_nested_or() {test("opt0_and_nested_or", FPROGRAMS.get("opt0_and_nested_or"));}
 	protected static FProgram make_opt0_and_nested_or() {
 		FProgram fp = new FProgram();
@@ -401,22 +418,6 @@ public abstract class AbstractTestF extends BaseTest351 {
 		return fp;
 	}
 
-	@Test public void opt1_and_false1() {test("opt1_and_false1", FPROGRAMS.get("opt1_and_false1"));}
-	protected static FProgram make_opt1_and_false1() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(new VarExpr("a"), ConstantExpr.FalseExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_and_false2() {test("opt1_and_false2", FPROGRAMS.get("opt1_and_false2"));}
-	protected static FProgram make_opt1_and_false2() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(ConstantExpr.FalseExpr, new VarExpr("a"))));
-		assert fp.repOk();
-		return fp;
-	}
-
 	@Test public void opt1_and_true1() {test("opt1_and_true1", FPROGRAMS.get("opt1_and_true1"));}
 	protected static FProgram make_opt1_and_true1() {
 		FProgram fp = new FProgram();
@@ -429,94 +430,6 @@ public abstract class AbstractTestF extends BaseTest351 {
 	protected static FProgram make_opt1_and_true2() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new AndExpr(ConstantExpr.TrueExpr, new VarExpr("a"))));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_false_and_false() {test("opt1_false_and_false", FPROGRAMS.get("opt1_false_and_false"));}
-	protected static FProgram make_opt1_false_and_false() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(ConstantExpr.FalseExpr, ConstantExpr.FalseExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_false_and_true() {test("opt1_false_and_true", FPROGRAMS.get("opt1_false_and_true"));}
-	protected static FProgram make_opt1_false_and_true() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(ConstantExpr.FalseExpr, ConstantExpr.TrueExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_false_or_false() {test("opt1_false_or_false", FPROGRAMS.get("opt1_false_or_false"));}
-	protected static FProgram make_opt1_false_or_false() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(ConstantExpr.FalseExpr, ConstantExpr.FalseExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_false_or_true() {test("opt1_false_or_true", FPROGRAMS.get("opt1_false_or_true"));}
-	protected static FProgram make_opt1_false_or_true() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(ConstantExpr.FalseExpr, ConstantExpr.TrueExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_not_false() {test("opt1_not_false", FPROGRAMS.get("opt1_not_false"));}
-	protected static FProgram make_opt1_not_false() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new NotExpr(ConstantExpr.FalseExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_not_false_and_true() {test("opt1_not_false_and_true", FPROGRAMS.get("opt1_not_false_and_true"));}
-	protected static FProgram make_opt1_not_false_and_true() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(new NotExpr(ConstantExpr.FalseExpr), ConstantExpr.TrueExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_not_false_or_false() {test("opt1_not_false_or_false", FPROGRAMS.get("opt1_not_false_or_false"));}
-	protected static FProgram make_opt1_not_false_or_false() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(new NotExpr(ConstantExpr.FalseExpr), ConstantExpr.FalseExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_not_false_or_true() {test("opt1_not_false_or_true", FPROGRAMS.get("opt1_not_false_or_true"));}
-	protected static FProgram make_opt1_not_false_or_true() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(new NotExpr(ConstantExpr.FalseExpr), ConstantExpr.TrueExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_not_true() {test("opt1_not_true", FPROGRAMS.get("opt1_not_true"));}
-	protected static FProgram make_opt1_not_true() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new NotExpr(ConstantExpr.TrueExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_not_true_and_false() {test("opt1_not_true_and_false", FPROGRAMS.get("opt1_not_true_and_false"));}
-	protected static FProgram make_opt1_not_true_and_false() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(new NotExpr(ConstantExpr.TrueExpr), ConstantExpr.FalseExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt1_not_true_or_false() {test("opt1_not_true_or_false", FPROGRAMS.get("opt1_not_true_or_false"));}
-	protected static FProgram make_opt1_not_true_or_false() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(new NotExpr(ConstantExpr.TrueExpr), ConstantExpr.FalseExpr)));
 		assert fp.repOk();
 		return fp;
 	}
@@ -537,162 +450,162 @@ public abstract class AbstractTestF extends BaseTest351 {
 		return fp;
 	}
 
-	@Test public void opt1_or_true1() {test("opt1_or_true1", FPROGRAMS.get("opt1_or_true1"));}
-	protected static FProgram make_opt1_or_true1() {
+	@Test public void opt2_and_false1() {test("opt2_and_false1", FPROGRAMS.get("opt2_and_false1"));}
+	protected static FProgram make_opt2_and_false1() {
+		FProgram fp = new FProgram();
+		fp = fp.append(new AssignmentStatement("x", new AndExpr(new VarExpr("a"), ConstantExpr.FalseExpr)));
+		assert fp.repOk();
+		return fp;
+	}
+
+	@Test public void opt2_and_false2() {test("opt2_and_false2", FPROGRAMS.get("opt2_and_false2"));}
+	protected static FProgram make_opt2_and_false2() {
+		FProgram fp = new FProgram();
+		fp = fp.append(new AssignmentStatement("x", new AndExpr(ConstantExpr.FalseExpr, new VarExpr("a"))));
+		assert fp.repOk();
+		return fp;
+	}
+
+	@Test public void opt2_or_true1() {test("opt2_or_true1", FPROGRAMS.get("opt2_or_true1"));}
+	protected static FProgram make_opt2_or_true1() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(new VarExpr("a"), ConstantExpr.TrueExpr)));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt1_or_true2() {test("opt1_or_true2", FPROGRAMS.get("opt1_or_true2"));}
-	protected static FProgram make_opt1_or_true2() {
+	@Test public void opt2_or_true2() {test("opt2_or_true2", FPROGRAMS.get("opt2_or_true2"));}
+	protected static FProgram make_opt2_or_true2() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(ConstantExpr.TrueExpr, new VarExpr("a"))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt1_true_and_false() {test("opt1_true_and_false", FPROGRAMS.get("opt1_true_and_false"));}
-	protected static FProgram make_opt1_true_and_false() {
+	@Test public void opt3_not_false() {test("opt3_not_false", FPROGRAMS.get("opt3_not_false"));}
+	protected static FProgram make_opt3_not_false() {
 		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(ConstantExpr.TrueExpr, ConstantExpr.FalseExpr)));
+		fp = fp.append(new AssignmentStatement("x", new NotExpr(ConstantExpr.FalseExpr)));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt1_true_and_true() {test("opt1_true_and_true", FPROGRAMS.get("opt1_true_and_true"));}
-	protected static FProgram make_opt1_true_and_true() {
+	@Test public void opt3_not_not() {test("opt3_not_not", FPROGRAMS.get("opt3_not_not"));}
+	protected static FProgram make_opt3_not_not() {
 		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new AndExpr(ConstantExpr.TrueExpr, ConstantExpr.TrueExpr)));
+		fp = fp.append(new AssignmentStatement("x", new NotExpr(new NotExpr(new VarExpr("a")))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt1_true_or_false() {test("opt1_true_or_false", FPROGRAMS.get("opt1_true_or_false"));}
-	protected static FProgram make_opt1_true_or_false() {
+	@Test public void opt3_not_true() {test("opt3_not_true", FPROGRAMS.get("opt3_not_true"));}
+	protected static FProgram make_opt3_not_true() {
 		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(ConstantExpr.TrueExpr, ConstantExpr.FalseExpr)));
+		fp = fp.append(new AssignmentStatement("x", new NotExpr(ConstantExpr.TrueExpr)));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt1_true_or_true() {test("opt1_true_or_true", FPROGRAMS.get("opt1_true_or_true"));}
-	protected static FProgram make_opt1_true_or_true() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(ConstantExpr.TrueExpr, ConstantExpr.TrueExpr)));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt2_and1() {test("opt2_and1", FPROGRAMS.get("opt2_and1"));}
-	protected static FProgram make_opt2_and1() {
+	@Test public void opt4_and_complement1() {test("opt4_and_complement1", FPROGRAMS.get("opt4_and_complement1"));}
+	protected static FProgram make_opt4_and_complement1() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new AndExpr(new VarExpr("a"), new NotExpr(new VarExpr("a")))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt2_and2() {test("opt2_and2", FPROGRAMS.get("opt2_and2"));}
-	protected static FProgram make_opt2_and2() {
+	@Test public void opt4_and_complement2() {test("opt4_and_complement2", FPROGRAMS.get("opt4_and_complement2"));}
+	protected static FProgram make_opt4_and_complement2() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new AndExpr(new NotExpr(new VarExpr("a")), new VarExpr("a"))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt2_or1() {test("opt2_or1", FPROGRAMS.get("opt2_or1"));}
-	protected static FProgram make_opt2_or1() {
+	@Test public void opt4_or_complement1() {test("opt4_or_complement1", FPROGRAMS.get("opt4_or_complement1"));}
+	protected static FProgram make_opt4_or_complement1() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(new VarExpr("a"), new NotExpr(new VarExpr("a")))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt2_or2() {test("opt2_or2", FPROGRAMS.get("opt2_or2"));}
-	protected static FProgram make_opt2_or2() {
+	@Test public void opt4_or_complement2() {test("opt4_or_complement2", FPROGRAMS.get("opt4_or_complement2"));}
+	protected static FProgram make_opt4_or_complement2() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(new NotExpr(new VarExpr("a")), new VarExpr("a"))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt3_and_dup() {test("opt3_and_dup", FPROGRAMS.get("opt3_and_dup"));}
-	protected static FProgram make_opt3_and_dup() {
+	@Test public void opt4_or_complement3() {test("opt4_or_complement3", FPROGRAMS.get("opt4_or_complement3"));}
+	protected static FProgram make_opt4_or_complement3() {
+		FProgram fp = new FProgram();
+		fp = fp.append(new AssignmentStatement("x", new OrExpr(new VarExpr("a"), new OrExpr(new VarExpr("b"), new NotExpr(new VarExpr("a"))))));
+		assert fp.repOk();
+		return fp;
+	}
+
+	@Test public void opt5_and_dup() {test("opt5_and_dup", FPROGRAMS.get("opt5_and_dup"));}
+	protected static FProgram make_opt5_and_dup() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new AndExpr(new VarExpr("a"), new VarExpr("a"))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt3_or_dup() {test("opt3_or_dup", FPROGRAMS.get("opt3_or_dup"));}
-	protected static FProgram make_opt3_or_dup() {
+	@Test public void opt5_or_dup() {test("opt5_or_dup", FPROGRAMS.get("opt5_or_dup"));}
+	protected static FProgram make_opt5_or_dup() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(new VarExpr("a"), new VarExpr("a"))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt4_and_or() {test("opt4_and_or", FPROGRAMS.get("opt4_and_or"));}
-	protected static FProgram make_opt4_and_or() {
+	@Test public void opt6_and_or() {test("opt6_and_or", FPROGRAMS.get("opt6_and_or"));}
+	protected static FProgram make_opt6_and_or() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new AndExpr(new VarExpr("a"), new OrExpr(new VarExpr("a"), new VarExpr("b")))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt4_and_or2() {test("opt4_and_or2", FPROGRAMS.get("opt4_and_or2"));}
-	protected static FProgram make_opt4_and_or2() {
+	@Test public void opt6_and_or2() {test("opt6_and_or2", FPROGRAMS.get("opt6_and_or2"));}
+	protected static FProgram make_opt6_and_or2() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new AndExpr(new OrExpr(new VarExpr("a"), new VarExpr("b")), new VarExpr("a"))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt4_big1() {test("opt4_big1", FPROGRAMS.get("opt4_big1"));}
-	protected static FProgram make_opt4_big1() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(new OrExpr(new OrExpr(new AndExpr(new AndExpr(new VarExpr("a"), new VarExpr("b")), new VarExpr("c")), new AndExpr(new AndExpr(new VarExpr("d"), new VarExpr("c")), new VarExpr("e"))), new AndExpr(new OrExpr(new OrExpr(new VarExpr("b"), new VarExpr("c")), new AndExpr(new VarExpr("a"), new VarExpr("e"))), new OrExpr(new VarExpr("c"), new VarExpr("b")))), new VarExpr("d"))));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt4_big2() {test("opt4_big2", FPROGRAMS.get("opt4_big2"));}
-	protected static FProgram make_opt4_big2() {
-		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(new AndExpr(new OrExpr(new OrExpr(new VarExpr("a"), new AndExpr(new VarExpr("a"), new VarExpr("b"))), new VarExpr("b")), new OrExpr(new OrExpr(new VarExpr("b"), new VarExpr("c")), new VarExpr("a"))), new AndExpr(new VarExpr("a"), new VarExpr("a")))));
-		assert fp.repOk();
-		return fp;
-	}
-
-	@Test public void opt4_or_and() {test("opt4_or_and", FPROGRAMS.get("opt4_or_and"));}
-	protected static FProgram make_opt4_or_and() {
+	@Test public void opt6_or_and() {test("opt6_or_and", FPROGRAMS.get("opt6_or_and"));}
+	protected static FProgram make_opt6_or_and() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(new VarExpr("a"), new AndExpr(new VarExpr("a"), new VarExpr("b")))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt4_or_no_paren() {test("opt4_or_no_paren", FPROGRAMS.get("opt4_or_no_paren"));}
-	protected static FProgram make_opt4_or_no_paren() {
+	@Test public void opt6_or_no_paren() {test("opt6_or_no_paren", FPROGRAMS.get("opt6_or_no_paren"));}
+	protected static FProgram make_opt6_or_no_paren() {
 		FProgram fp = new FProgram();
 		fp = fp.append(new AssignmentStatement("x", new OrExpr(new AndExpr(new VarExpr("b"), new VarExpr("a")), new VarExpr("a"))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt5_fixed_point() {test("opt5_fixed_point", FPROGRAMS.get("opt5_fixed_point"));}
-	protected static FProgram make_opt5_fixed_point() {
+	@Test public void opt7_big1() {test("opt7_big1", FPROGRAMS.get("opt7_big1"));}
+	protected static FProgram make_opt7_big1() {
 		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new OrExpr(new VarExpr("a"), new NotExpr(new NotExpr(new OrExpr(new VarExpr("b"), new VarExpr("c")))))));
+		fp = fp.append(new AssignmentStatement("x", new OrExpr(new AndExpr(new OrExpr(new OrExpr(new VarExpr("a"), new AndExpr(new VarExpr("a"), new VarExpr("b"))), new VarExpr("b")), new OrExpr(new OrExpr(new VarExpr("b"), new VarExpr("c")), new VarExpr("a"))), new AndExpr(new VarExpr("a"), new VarExpr("a")))));
 		assert fp.repOk();
 		return fp;
 	}
 
-	@Test public void opt5_not_and() {test("opt5_not_and", FPROGRAMS.get("opt5_not_and"));}
-	protected static FProgram make_opt5_not_and() {
+	@Test public void opt7_big2() {test("opt7_big2", FPROGRAMS.get("opt7_big2"));}
+	protected static FProgram make_opt7_big2() {
 		FProgram fp = new FProgram();
-		fp = fp.append(new AssignmentStatement("x", new NotExpr(new AndExpr(new VarExpr("a"), ConstantExpr.TrueExpr))));
+		fp = fp.append(new AssignmentStatement("x", new OrExpr(new OrExpr(new OrExpr(new AndExpr(new AndExpr(new VarExpr("a"), new VarExpr("b")), new VarExpr("c")), new AndExpr(new AndExpr(new VarExpr("d"), new VarExpr("c")), new VarExpr("e"))), new AndExpr(new OrExpr(new OrExpr(new VarExpr("b"), new VarExpr("c")), new AndExpr(new VarExpr("a"), new VarExpr("e"))), new OrExpr(new VarExpr("c"), new VarExpr("b")))), new VarExpr("d"))));
 		assert fp.repOk();
 		return fp;
 	}
