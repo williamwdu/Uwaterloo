@@ -86,13 +86,65 @@ public final class FRecursiveDescentParser implements Constants {
         lexer.consume("<=");
         final Expr expr = expr();
         lexer.consume(";");
+        System.out.print(var+" <= "); //test
+        System.out.println(expr);
         return new AssignmentStatement(var, expr);
     }
     
-    Expr expr() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-    Expr term() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-    Expr factor() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-    VarExpr var() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
+    Expr expr() {
+    	Expr returned;
+    	returned = term();
+    	while (lexer.inspect(OR)){
+    		lexer.consume(OR);
+    		Expr right = term();
+    		returned = new OrExpr(returned,right);
+    	}
+    	return returned;
+    } // TODO // TODO: replace this stub
+    Expr term() {
+    	Expr returned;
+    	returned = factor();
+    	while (lexer.inspect(AND)){
+    		lexer.consume(AND);
+    		Expr right = factor();
+    		returned = new AndExpr(returned,right);
+    	}
+    	return returned;
+    } // TODO // TODO: replace this stub
+    Expr factor() {
+    	Expr returned;
+    	if(lexer.inspect(NOT)){
+    		lexer.consume(NOT);
+    		Expr newfactor =factor();
+    		returned = new NotExpr(newfactor);
+    		return returned;
+    	}
+		else{
+			if(lexer.inspect("(")){
+				lexer.consume("(");
+				returned = expr();
+				lexer.consume(")");
+				return returned;
+			}
+			else{
+				if(lexer.inspect("'")){
+					returned = constant();
+					return returned;
+				}
+				else{
+				returned = var();
+				return returned;
+				}
+			}
+		}
+    } // TODO // TODO: replace this stub
+    VarExpr var() {
+    	String input = "";
+    	while (lexer.inspectID()){
+    	input = input + lexer.consumeID();
+    	}
+    	return new VarExpr(input);
+    } // TODO // TODO: replace this stub
     ConstantExpr constant() { 
     	String input = "";
     	if(lexer.inspect("'")){

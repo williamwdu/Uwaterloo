@@ -61,7 +61,7 @@ public abstract class BinaryExpr extends Expr {
 	public final String toString() {
 // TODO: longer code snippet
 		String str = "";
-		str = left.toString() + operator() + right.toString();
+		str = left.toString() +" "+ operator() +" "+ right.toString();
 		return str;
 	}
 	
