@@ -93,7 +93,23 @@ public final class FRecursiveDescentParser implements Constants {
     Expr term() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
     Expr factor() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
     VarExpr var() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-    ConstantExpr constant() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
+    ConstantExpr constant() { 
+    	String input = "";
+    	if(lexer.inspect("'")){
+    }
+		lexer.consume("'");
+		if(lexer.inspect("0","1")){
+    		input = lexer.consume("1","0");
+    		lexer.consume("'");
+    		
+    	}
+		if (input == "1"){
+			return ConstantExpr.TrueExpr;
+		}
+		else{
+			return ConstantExpr.FalseExpr;
+		}
+    } // TODO // TODO: replace this stub
 
     // helper functions
     private boolean peekConstant() {
