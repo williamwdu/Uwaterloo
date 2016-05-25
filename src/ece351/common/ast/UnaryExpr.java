@@ -55,8 +55,8 @@ public abstract class UnaryExpr extends Expr {
 		if (!obj.getClass().equals(this.getClass())) return false;
 		final UnaryExpr that = (UnaryExpr) obj;
 		// compare field values using e.examine(x,y)
+		return e.examine(expr, that.expr);
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
     }
     
     @Override
@@ -78,7 +78,9 @@ throw new ece351.util.Todo351Exception();
 	@Override
 	public final String toString() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		String str = "";
+		str = expr.toString();
+		return str;
 	}
 
 }

@@ -38,6 +38,7 @@ import ece351.common.ast.VarExpr;
 import ece351.util.Examinable;
 import ece351.util.Examiner;
 import ece351.util.RunAlloy351;
+import ece351.w.ast.Waveform;
 
 
 public final class FProgram implements Examinable {
@@ -127,8 +128,12 @@ public final class FProgram implements Examinable {
     public String toString() {
 		if (formulas == null || formulas.isEmpty()) return "";
 		final String sep = System.getProperty("line.separator");
+		String str = "";
+		for (AssignmentStatement f : formulas){
+			str = str + f.toString() + sep;
+		}
+		return str;
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
     }
     
 	@Override
@@ -137,11 +142,10 @@ throw new ece351.util.Todo351Exception();
 		if (obj == null) return false;
 		if (!obj.getClass().equals(this.getClass())) return false;
 		final FProgram that = (FProgram) obj;
-		
+		return(Examiner.orderedEquals(formulas, that.formulas));
 		// compare field values using Examiner.orderedExamination()
 		// no significant differences found, return true
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 	}
 	
 	@Override
@@ -150,11 +154,10 @@ throw new ece351.util.Todo351Exception();
 		if (obj == null) return false;
 		if (!obj.getClass().equals(this.getClass())) return false;
 		final FProgram that = (FProgram) obj;
-		
+		return(Examiner.unorderedEquals(formulas, that.formulas));
 		// compare field values using Examiner.unorderedExamination()
 		// no significant differences found, return true
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 	}
 
 	/**

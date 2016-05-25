@@ -50,10 +50,27 @@ public abstract class CommutativeBinaryExpr extends BinaryExpr {
 		if (obj == null) return false;
 		if (!this.getClass().equals(obj.getClass())) return false;
 		final CommutativeBinaryExpr cbe = (CommutativeBinaryExpr) obj;
-		
+		if (e.examine(left, cbe.left)){
+			if (e.examine(right, cbe.right)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			if (e.examine(left, cbe.right)){
+				if(e.examine(right, cbe.left)){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			return false;
+		}
 		// compare field values, both ways, using e.examine(x,y)
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 	}
 
 

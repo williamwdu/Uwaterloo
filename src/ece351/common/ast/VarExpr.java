@@ -70,7 +70,12 @@ public final class VarExpr extends Expr {
 		final VarExpr that = (VarExpr) obj;
 		// compare field values
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		if (that.identifier == identifier){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	@Override

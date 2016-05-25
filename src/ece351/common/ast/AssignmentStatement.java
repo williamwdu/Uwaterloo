@@ -67,7 +67,9 @@ public final class AssignmentStatement extends Statement implements Examinable {
     @Override
     public String toString() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	String str = "";
+    	str = outputVar.toString() + " <= " + expr.toString() + " ;";
+    	return str;
     }
 
 	@Override
@@ -93,9 +95,12 @@ throw new ece351.util.Todo351Exception();
 		final AssignmentStatement that = (AssignmentStatement) obj;
 		
 		// TODO: compare field values
+		if(!this.expr.operator().equals(that.expr.operator())) return false;
+		if (!this.outputVar.equals(that.outputVar)) return false;
+		
 		// no significant differences found, return true
+		return true;
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
 	}
 
 	/**
