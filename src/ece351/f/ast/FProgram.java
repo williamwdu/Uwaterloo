@@ -142,7 +142,8 @@ public final class FProgram implements Examinable {
 		if (obj == null) return false;
 		if (!obj.getClass().equals(this.getClass())) return false;
 		final FProgram that = (FProgram) obj;
-		return(Examiner.orderedEquals(formulas, that.formulas));
+		Examiner equals = Examiner.Equals;
+		return(Examiner.orderedExamination(equals,formulas, that.formulas));
 		// compare field values using Examiner.orderedExamination()
 		// no significant differences found, return true
 // TODO: short code snippet
@@ -154,9 +155,15 @@ public final class FProgram implements Examinable {
 		if (obj == null) return false;
 		if (!obj.getClass().equals(this.getClass())) return false;
 		final FProgram that = (FProgram) obj;
-		return(Examiner.unorderedEquals(formulas, that.formulas));
+		//if(!Examiner.unorderedEquals(formulas, that.formulas)) {
+		Examiner Isomorphic = Examiner.Isomorphic;
+		if(!Examiner.unorderedExamination(Isomorphic,formulas, that.formulas)) {
+
+			return false;
+		}
 		// compare field values using Examiner.unorderedExamination()
 		// no significant differences found, return true
+		return true;
 // TODO: short code snippet
 	}
 

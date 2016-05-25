@@ -55,9 +55,19 @@ public abstract class CommutativeBinaryExpr extends BinaryExpr {
 				return true;
 			}
 			else{
+				if (e.examine(left, cbe.right)){
+					if(e.examine(right, cbe.left)){
+						return true;
+					}
+					else{
+						return false;
+					}
+				
+				}
 				return false;
+				}
 			}
-		}
+	
 		else{
 			if (e.examine(left, cbe.right)){
 				if(e.examine(right, cbe.left)){

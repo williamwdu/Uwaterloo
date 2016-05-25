@@ -95,8 +95,11 @@ public final class AssignmentStatement extends Statement implements Examinable {
 		final AssignmentStatement that = (AssignmentStatement) obj;
 		
 		// TODO: compare field values
-		if(!this.expr.operator().equals(that.expr.operator())) return false;
-		if (!this.outputVar.equals(that.outputVar)) return false;
+		//if(!this.expr.operator().isEmpty()){
+			if(!that.expr.isomorphic(this.expr)) return false;
+		//if(!this.expr.operator().equals(that.expr.operator())) return false;
+		//}
+		if (!this.outputVar.isomorphic(that.outputVar)) return false;
 		
 		// no significant differences found, return true
 		return true;
