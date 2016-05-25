@@ -67,11 +67,61 @@ public final class FRecursiveDescentRecognizer implements Constants {
         lexer.consume(";");
     }
     
-    void expr() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-    void term() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-	void factor() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-	void var() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
-	void constant() { throw new ece351.util.Todo351Exception(); } // TODO // TODO: replace this stub
+    void expr() {
+    	//System.out.println("expr started");
+    	term();
+    	while (lexer.inspect(OR)){
+    		lexer.consume(OR);
+    		term();
+    	}
+    	//System.out.println("expr ended");
+    } // TODO // TODO: replace this stub
+    void term() {
+    	//System.out.println("term started");
+    	factor();
+    	while (lexer.inspect(AND)){
+    		lexer.consume(AND);
+    		factor();
+    	}
+    	//System.out.println("term ended");
+    } // TODO // TODO: replace this stub
+	void factor() {
+		//System.out.println("factor started");
+		if(lexer.inspect(NOT)){
+    		lexer.consume(NOT);
+    		factor();
+    	}
+		else{
+			if(lexer.inspect("(")){
+				lexer.consume("(");
+				expr();
+				lexer.consume(")");
+			}
+			else{
+				var();
+				constant();
+			}
+		}
+		//System.out.println("factor ended");
+		} // TODO // TODO: replace this stub
+	void var() { 
+		while (lexer.inspectID()){
+	    	lexer.consumeID();
+	    	//System.out.println("var passed");
+	    }
+	} // TODO // TODO: replace this stub
+	void constant() { 
+		if(lexer.inspect("'")){
+			lexer.consume("'");
+			if(lexer.inspect("0","1")){
+	    		lexer.consume("1","0");
+	    		lexer.consume("'");
+	    	}
+		//System.out.println("constant passed");
+		}
+		
+
+	} // TODO // TODO: replace this stub
 
 
     // helper functions
