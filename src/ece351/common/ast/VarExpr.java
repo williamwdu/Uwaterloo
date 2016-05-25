@@ -70,7 +70,7 @@ public final class VarExpr extends Expr {
 		final VarExpr that = (VarExpr) obj;
 		// compare field values
 // TODO: short code snippet
-		if (that.identifier == identifier){
+		if (that.identifier.equals(identifier)){
 			return true;
 		}
 		else{
