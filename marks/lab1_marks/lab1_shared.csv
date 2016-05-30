@@ -1,0 +1,8 @@
+test_suite,good,bad,mark
+ece351.w.rdescent.TestWRDParserAccept,31,0,20.00
+ece351.w.rdescent.TestWRDParserBasic,3,0,5.00
+ece351.w.rdescent.TestWRDParserReject,8,0,5.00
+ece351.w.rdescent.TestWRDRecognizerAccept,31,0,15.00
+ece351.w.rdescent.TestWRDRecognizerReject,8,0,5.00
+ece351.w.regex.TestWRegexAccept,31,0,10.00
+ece351.w.regex.TestWRegexReject,8,0,5.00
