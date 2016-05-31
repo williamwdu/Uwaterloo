@@ -1,1 +1,5 @@
-Compile error in marking. Please check the ant log file for details of error
+test_suit,mark
+ece351.objectcontract.TestObjectContract,20.00
+ece351.w.svg.TestW2SVG2W,50.00
+ece351.w.svg.TestW2SVG,30.00
+Total,100.00
