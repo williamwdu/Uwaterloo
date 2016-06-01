@@ -1,0 +1,7 @@
+test_suit,mark
+ece351.f.rdescent.TestFRDParser,40.00
+ece351.f.rdescent.TestFRDParserBasic,10.00
+ece351.f.rdescent.TestFRDRecognizerAccept,10.00
+ece351.f.rdescent.TestFRDRecognizerReject,10.00
+ece351.f.test.TestObjectContractF,30.00
+Total,100.00
