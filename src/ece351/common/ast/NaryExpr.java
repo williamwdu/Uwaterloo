@@ -219,7 +219,12 @@ public abstract class NaryExpr extends Expr {
 		// note: we do not assert repOk() here because the rep might not be ok
 		// the result might contain duplicate children, and the children
 		// might be out of order
-		return this; // TODO: replace this stub
+		ArrayList<Expr> list = new ArrayList<>();
+		for (int i=0; i< this.children.size(); i++){
+		Expr simplified = this.children.get(i).simplify();
+		list.add(simplified);		
+		}
+		return newNaryExpr(list); // TODO: replace this stub
 	}
 
 	
@@ -245,19 +250,34 @@ public abstract class NaryExpr extends Expr {
 			// merge in the grandchildren
 		
 			// assert result.repOk():  this operation should always leave the AST in a legal state
-		result.repOk();
+		assert result.repOk();
 		return result; // TODO: replace this stub
 	}
 
 
     private NaryExpr foldIdentityElements() {
     	// if we have only one child stop now and return self
+    	
+    	if (this.children.size() != 1){
+    		ArrayList<Expr> list = new ArrayList<>();
+    		list.add(this.getIdentityElement());
+    		NaryExpr result = removeAll(list, Examiner.Equals);
+    		if (result.children.isEmpty()){
+    			return result.append(this.getIdentityElement());
+    		}
+    		else{
+    		return result;
+    		}
+    	}
+    	else{
+    		return this;
+    	}
     	// we have multiple children, remove the identity elements
     		// all children were identity elements, so now our working list is empty
     		// return a new list with a single identity element
     		// normal return
     	// do not assert repOk(): this fold might leave the AST in an illegal state (with only one child)
-		return this; // TODO: replace this stub
+		 // TODO: replace this stub
     }
 
     private NaryExpr foldAbsorbingElements() {
@@ -266,7 +286,13 @@ public abstract class NaryExpr extends Expr {
 			// not so fast! what is the return type of this method? why does it have to be that way?
 			// no absorbing element present, do nothing
     	// do not assert repOk(): this fold might leave the AST in an illegal state (with only one child)
-		return this; // TODO: replace this stub
+    	if (contains(this.getAbsorbingElement(),Examiner.Equals)){
+    		ArrayList<Expr> list = new ArrayList<>();
+    		list.add(this.getAbsorbingElement());
+    		NaryExpr result = newNaryExpr(list);
+    		return result;
+    	}
+    	return this; // TODO: replace this stub
 	}
 
 	private NaryExpr foldComplements() {
@@ -311,8 +337,13 @@ public abstract class NaryExpr extends Expr {
 	private Expr singletonify() {
 		// if we have only one child, return it
 		// having only one child is an illegal state for an NaryExpr
-			// multiple children; nothing to do; return self
-		return this; // TODO: replace this stub
+		// multiple children; nothing to do; return self
+		if (this.children.size() == 1){
+			return (this.children.get(0));
+		}
+		else{
+		return this;
+		}// TODO: replace this stub
 	}
 
 	/**
