@@ -175,14 +175,23 @@ public abstract class NaryExpr extends Expr {
 		if (obj == null) return false;
 		if (!this.getClass().equals(obj.getClass())) return false;
 		final NaryExpr that = (NaryExpr) obj;
-		
 		// if the number of children are different, consider them not equivalent
-		// since the n-ary expressions have the same number of children and they are sorted, just iterate and check
+		if ( that.children.size()!= this.children.size()) return false;
+		// since the n-ary expressions have the same number of children and they 
+		//are sorted, just iterate and 
 		// supposed to be sorted, but might not be (because repOk might not pass)
 		// if they aren't the same elements in the same order return false
+		for (int i =0; i < this.children.size(); i++) {
+    		if (!this.children.get(i).equals(that.children.get(i))){
+    			return false;
+    		}
+    		}
+		e.examine(obj, this);
+    		return true;
+    	
 		// no significant differences found, return true
+		
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
 	}
 
 	
@@ -215,11 +224,19 @@ throw new ece351.util.Todo351Exception();
 
 	
 	private NaryExpr mergeGrandchildren() {
+		Expr expr = new VarExpr("x");
+		this.filter(expr, Examiner.Equals, true);
+		this.filter(expr.getClass(), true);
 		// extract children to merge using filter (because they are the same type as us)
 			// if no children to merge, then return this (i.e., no change)
+		
+		if ()
 			// use filter to get the other children, which will be kept in the result unchanged
+		
 			// merge in the grandchildren
+		
 			// assert result.repOk():  this operation should always leave the AST in a legal state
+			result.repOk();
 		return this; // TODO: replace this stub
 	}
 

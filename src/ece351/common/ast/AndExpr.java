@@ -46,7 +46,7 @@ public final class AndExpr extends CommutativeBinaryExpr {
 	protected Expr simplifyOnce() {
 		// return a new NaryAndExpr with the same children as this AndExpr
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		return new NaryAndExpr(left, right);
 	}
 
 	@Override
