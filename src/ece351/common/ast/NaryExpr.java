@@ -224,20 +224,29 @@ public abstract class NaryExpr extends Expr {
 
 	
 	private NaryExpr mergeGrandchildren() {
-		Expr expr = new VarExpr("x");
-		this.filter(expr, Examiner.Equals, true);
-		this.filter(expr.getClass(), true);
 		// extract children to merge using filter (because they are the same type as us)
-			// if no children to merge, then return this (i.e., no change)
-		
-		if ()
+			// if no children to merge, then return this (i.e., no change)		
+		if (this.children.isEmpty()){
+			return this;
+		}
+		NaryExpr filtered = this.filter(this.getClass(), true);
+		if (filtered.children.isEmpty()) return this;
+		ArrayList<Expr> list = new ArrayList<>();
+		for (int i =0; i < filtered.children.size(); i++) {
+			NaryExpr secondLayer = (NaryExpr) filtered.children.get(i);
+			for(int j=0; i < secondLayer.children.size(); j++){
+				list.add(secondLayer.children.get(j));
+			}
+		}
+
+		NaryExpr result = newNaryExpr(list);
 			// use filter to get the other children, which will be kept in the result unchanged
 		
 			// merge in the grandchildren
 		
 			// assert result.repOk():  this operation should always leave the AST in a legal state
-			result.repOk();
-		return this; // TODO: replace this stub
+		result.repOk();
+		return result; // TODO: replace this stub
 	}
 
 
