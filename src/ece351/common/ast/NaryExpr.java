@@ -239,7 +239,7 @@ public abstract class NaryExpr extends Expr {
 		ArrayList<Expr> list = new ArrayList<>();
 		for (int i =0; i < filtered.children.size(); i++) {
 			NaryExpr secondLayer = (NaryExpr) filtered.children.get(i);
-			for(int j=0; i < secondLayer.children.size(); j++){
+			for(int j=0; j < secondLayer.children.size(); j++){
 				list.add(secondLayer.children.get(j));
 			}
 		}
@@ -300,6 +300,18 @@ public abstract class NaryExpr extends Expr {
 		// !x . x . ... = 0 and !x + x + ... = 1
 		// x op !x = absorbing element
 		// find all negations
+		NotExpr not = new NotExpr();
+		NaryExpr filtered = this.filter(not.getClass(), true);
+		for(int i=0; i< filtered.children.size(); i--){
+			NotExpr target = (NotExpr) filtered.children.get(i);
+			Expr constant = target.expr;
+			if(this.contains(constant,Examiner.Equals)){
+				ArrayList<Expr> list = new ArrayList<>();
+	    		list.add(this.getAbsorbingElement());
+	    		NaryExpr result = newNaryExpr(list);
+	    		return result;					
+			}
+		}
 		// for each negation, see if we find its complement
 				// found matching negation and its complement
 				// return absorbing element
@@ -313,6 +325,17 @@ public abstract class NaryExpr extends Expr {
 		// since children are sorted this is fairly easy
 			// no changes
 			// removed some duplicates
+		for(int j=0; j < this.children.size()-1; j++){
+		Expr base = this.children.get(j);
+		for(int i=j+1; i< this.children.size(); i++){
+			if (base.equals(this.children.get(i))){
+				ArrayList<Expr> list = new ArrayList<>();
+	    		list.add(base);
+				NaryExpr result = removeAll(list, Examiner.Equals);
+				return result.append(base);
+			}
+		}
+		}
     	// do not assert repOk(): this fold might leave the AST in an illegal state (with only one child)
 		return this; // TODO: replace this stub
 	}
@@ -320,6 +343,28 @@ public abstract class NaryExpr extends Expr {
 	private NaryExpr simpleAbsorption() {
 		// (x.y) + x ... = x ...
 		// check if there are any conjunctions that can be removed
+		
+		NaryExpr filtered = this.filter(this.getClass(), true);
+		ArrayList<Expr> varlist = new ArrayList<>();
+		for (int i =0; i < filtered.children.size(); i++) {
+			NaryExpr secondLayer = (NaryExpr) filtered.children.get(i);
+			for(int j=0; j < secondLayer.children.size(); j++){
+				varlist.add(secondLayer.children.get(j));
+			}
+		}
+		NaryExpr filtered2 = this.filter(this.getClass(), false);
+		for (Expr temp : varlist){
+			for (int k =0; k < filtered2.children.size(); k++) {
+				if (filtered2.children.get(k).equals(temp)){
+					ArrayList<Expr> result = new ArrayList<>();
+					result.add(temp);
+		    		NaryExpr returned = newNaryExpr(result);
+					return returned;
+				}			
+			}
+		}
+		
+		
     	// do not assert repOk(): this operation might leave the AST in an illegal state (with only one child)
 		return this; // TODO: replace this stub
 	}
@@ -328,6 +373,18 @@ public abstract class NaryExpr extends Expr {
 		// check if there are any conjunctions that are supersets of others
 		// e.g., ( a . b . c ) + ( a . b ) = a . b
     	// do not assert repOk(): this operation might leave the AST in an illegal state (with only one child)
+		/*
+		NaryAndExpr naryand = new NaryAndExpr();
+		NaryOrExpr naryor = new NaryOrExpr();
+		NaryExpr filtered = (NaryExpr) this.filter(naryand.getClass(), true).children.get(0);
+		NaryExpr SecondFiltered = filtered.filter(naryor.getClass(), true);
+		NaryExpr target = (NaryExpr) SecondFiltered.children.get(0);
+		for (int i=0; i< this.children.size(); i++){
+			if (target.equals(this.children.get(i))){
+				return target;
+			}
+		}
+		*/
 		return this; // TODO: replace this stub
 	}
 
