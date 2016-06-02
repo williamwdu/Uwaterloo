@@ -186,7 +186,7 @@ public abstract class NaryExpr extends Expr {
     			return false;
     		}
     		}
-		e.examine(obj, this);
+		//e.examine(obj, this);
     		return true;
     	
 		// no significant differences found, return true
@@ -234,14 +234,14 @@ public abstract class NaryExpr extends Expr {
 		if (this.children.isEmpty()){
 			return this;
 		}
-		NaryExpr filtered = this.filter(this.getClass(), true);
+		NaryExpr filtered = filter(this.getClass(), true);
 		if (filtered.children.isEmpty()) return this;
-		ArrayList<Expr> list = new ArrayList<>();
+		ArrayList<Expr> list = new ArrayList<Expr>(this.children);
 		for (int i =0; i < filtered.children.size(); i++) {
 			NaryExpr secondLayer = (NaryExpr) filtered.children.get(i);
-			for(int j=0; j < secondLayer.children.size(); j++){
-				list.add(secondLayer.children.get(j));
-			}
+				list.remove(secondLayer);
+				list.addAll(secondLayer.children);
+			
 		}
 
 		NaryExpr result = newNaryExpr(list);
@@ -302,7 +302,7 @@ public abstract class NaryExpr extends Expr {
 		// find all negations
 		NotExpr not = new NotExpr();
 		NaryExpr filtered = this.filter(not.getClass(), true);
-		for(int i=0; i< filtered.children.size(); i--){
+		for(int i=0; i< filtered.children.size(); i++){
 			NotExpr target = (NotExpr) filtered.children.get(i);
 			Expr constant = target.expr;
 			if(this.contains(constant,Examiner.Equals)){
@@ -344,23 +344,22 @@ public abstract class NaryExpr extends Expr {
 		// (x.y) + x ... = x ...
 		// check if there are any conjunctions that can be removed
 		
-		NaryExpr filtered = this.filter(this.getClass(), true);
-		ArrayList<Expr> varlist = new ArrayList<>();
+		NaryExpr filtered = this.filter(this.getThatClass(), true);
+		ArrayList<NaryExpr> varlist = new ArrayList<>();
 		for (int i =0; i < filtered.children.size(); i++) {
 			NaryExpr secondLayer = (NaryExpr) filtered.children.get(i);
-			for(int j=0; j < secondLayer.children.size(); j++){
-				varlist.add(secondLayer.children.get(j));
-			}
+				varlist.add(secondLayer);			
 		}
-		NaryExpr filtered2 = this.filter(this.getClass(), false);
-		for (Expr temp : varlist){
+		NaryExpr filtered2 = this.filter(this.getThatClass(), false);
+		for (NaryExpr temp : varlist){
+			for (int j=0; j < temp.children.size();j++ ){
 			for (int k =0; k < filtered2.children.size(); k++) {
-				if (filtered2.children.get(k).equals(temp)){
+				if (filtered2.children.get(k).equals(temp.children.get(j))){
 					ArrayList<Expr> result = new ArrayList<>();
 					result.add(temp);
-		    		NaryExpr returned = newNaryExpr(result);
-					return returned;
+					return this.removeAll(result, Examiner.Equals);
 				}			
+			}
 			}
 		}
 		
@@ -370,22 +369,36 @@ public abstract class NaryExpr extends Expr {
 	}
 
 	private NaryExpr subsetAbsorption() {
-		// check if there are any conjunctions that are supersets of others
-		// e.g., ( a . b . c ) + ( a . b ) = a . b
-    	// do not assert repOk(): this operation might leave the AST in an illegal state (with only one child)
-		/*
-		NaryAndExpr naryand = new NaryAndExpr();
-		NaryOrExpr naryor = new NaryOrExpr();
-		NaryExpr filtered = (NaryExpr) this.filter(naryand.getClass(), true).children.get(0);
-		NaryExpr SecondFiltered = filtered.filter(naryor.getClass(), true);
-		NaryExpr target = (NaryExpr) SecondFiltered.children.get(0);
-		for (int i=0; i< this.children.size(); i++){
-			if (target.equals(this.children.get(i))){
-				return target;
+		ArrayList<Expr> list = new ArrayList<Expr>();
+		NaryExpr filtered = this.filter(this.getThatClass(), true);
+		ArrayList<NaryExpr> comparelist = new ArrayList<>();
+		for (int i =0; i < filtered.children.size(); i++) {
+			NaryExpr secondLayer = (NaryExpr) filtered.children.get(i);
+			comparelist.add(secondLayer);
+		}
+
+		for (int j=0; j < comparelist.size(); j++){
+			NaryExpr item =  comparelist.get(j);
+			boolean kill = true;
+			for (int k =0; k < comparelist.size(); k++) {
+				if (k==j){
+					
+				}
+				else{
+				for(int itemcounter=0; itemcounter < item.children.size(); itemcounter++){
+					if (!comparelist.get(k).contains(item.children.get(itemcounter), Examiner.Equals)){
+						kill = false;
+					}
+
+				}
+				if (kill == true){
+					list.add(comparelist.get(k));
+				}
+				}
 			}
 		}
-		*/
-		return this; // TODO: replace this stub
+			
+		return this.removeAll(list, Examiner.Equals); // TODO: replace this stub
 	}
 
 	/**

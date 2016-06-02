@@ -41,16 +41,17 @@ public final class NotExpr extends UnaryExpr{
 	
 	@Override
     protected final Expr simplifyOnce() {		
-    	if (this.expr instanceof ConstantExpr){
-    		if (this.expr.equals(ConstantExpr.TrueExpr)){
+    	Expr simplified = this.expr.simplify();
+		if (simplified instanceof ConstantExpr){
+    		if (simplified.equals(ConstantExpr.TrueExpr)){
     			return ConstantExpr.FalseExpr;
     		}
-    		if (this.expr.equals(ConstantExpr.FalseExpr)){
+    		if (simplified.equals(ConstantExpr.FalseExpr)){
     		return ConstantExpr.TrueExpr;
     		}
     	}
-    	if (this.expr instanceof NotExpr){
-    		NotExpr notExpr = (NotExpr)this.expr;
+    	if (simplified instanceof NotExpr){
+    		NotExpr notExpr = (NotExpr)simplified;
     		return notExpr.expr;
     	}
 		// simplify our child first
@@ -59,7 +60,7 @@ public final class NotExpr extends UnaryExpr{
     		// !!x = x
     		// nothing changed
     		// something changed
-    	return this; // TODO: replace this stub
+    	return new NotExpr(simplified); // TODO: replace this stub
     }
 	
     public Expr accept(final ExprVisitor v){
