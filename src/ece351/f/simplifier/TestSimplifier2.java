@@ -45,6 +45,10 @@ import ece351.common.ast.VarExpr;
 import ece351.f.ast.FProgram;
 import ece351.util.BaseTest351;
 
+import org.junit.runners.MethodSorters;
+import org.junit.FixMethodOrder;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public final class TestSimplifier2 extends BaseTest351 {
 	protected final void test(final String name, final FProgram original, final FProgram simplified) {
 		System.out.println(name);
