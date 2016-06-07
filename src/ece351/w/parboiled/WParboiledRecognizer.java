@@ -65,8 +65,10 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
 	@Override
 	public Rule Program() {
 // TODO: short code snippet
-		debug();
-		return OneOrMore(Waveform());
+		//debug();
+		return Sequence(
+				OneOrMore(Waveform()),
+				EOI);
 	}
     
 	/**
@@ -74,7 +76,7 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
 	 */
     public Rule Waveform() {
 // TODO: short code snippet
-    	debug();
+    	//debug();
     	return Sequence(
     			WhiteSpace(),
     			Name(),
@@ -83,7 +85,8 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
     			WhiteSpace(),
     			BitString(),
     			WhiteSpace(),
-    			";");
+    			";",
+    			WhiteSpace());
     }
 
     /**
@@ -92,7 +95,7 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
      */
     public Rule Name() {
 // TODO: short code snippet
-    	debug();
+    	//debug();
     	return Sequence(
     			WhiteSpace(),
     			Letter(),
@@ -107,8 +110,8 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
      */
     public Rule Letter() {
 // TODO: short code snippet
-    	debug();
-    	System.out.println("aceppt Letter");
+    	//debug();
+    	//System.out.println("aceppt Letter");
 	return FirstOf(CharRange('a' , 'z' ), CharRange('A', 'Z'));
     }
 
@@ -117,7 +120,7 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
      */
     public Rule BitString() {
 // TODO: short code snippet
-    	debug();
+    	//debug();
     	return Sequence(
     			WhiteSpace(),
     			OneOrMore(Bit()),
@@ -132,25 +135,26 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
      */
     public Rule Bit() {       
 // TODO: short code snippet
-    	debug();
-    	System.out.println("aceppt bit");
+    	//debug();
+    	//System.out.println("aceppt bit");
     	return FirstOf('0','1');
     }
     //TODO: New added rule, asked instructor on piazza.
     public Rule Digit() {
-    	debug();
-    	System.out.println("aceppt digit");
+    	//debug();
+    	//System.out.println("aceppt digit");
     	return CharRange('0', '9');
     }
     public Rule WhiteSpace() {
-    	debug();
-    	System.out.println("aceppt WhiteSpace");
+    	//debug();
+    	//System.out.println("aceppt WhiteSpace");
         return ZeroOrMore(AnyOf(" \t\f\n"));
     }
-    boolean debug() {
+   /* boolean debug() {
         System.out.println("."); // set breakpoint here if required
         return true;
     }
+    */
 
 
 }
