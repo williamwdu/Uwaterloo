@@ -65,7 +65,8 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
 	@Override
 	public Rule Program() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		debug();
+		return OneOrMore(Waveform());
 	}
     
 	/**
@@ -73,7 +74,16 @@ throw new ece351.util.Todo351Exception();
 	 */
     public Rule Waveform() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	debug();
+    	return Sequence(
+    			WhiteSpace(),
+    			Name(),
+    			WhiteSpace(),
+    			":",
+    			WhiteSpace(),
+    			BitString(),
+    			WhiteSpace(),
+    			";");
     }
 
     /**
@@ -82,7 +92,13 @@ throw new ece351.util.Todo351Exception();
      */
     public Rule Name() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	debug();
+    	return Sequence(
+    			WhiteSpace(),
+    			Letter(),
+    			ZeroOrMore(
+    					FirstOf(Letter(),Digit(),"_")
+    					));
     }
 
     /**
@@ -91,7 +107,9 @@ throw new ece351.util.Todo351Exception();
      */
     public Rule Letter() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	debug();
+    	System.out.println("aceppt Letter");
+	return FirstOf(CharRange('a' , 'z' ), CharRange('A', 'Z'));
     }
 
     /**
@@ -99,7 +117,13 @@ throw new ece351.util.Todo351Exception();
      */
     public Rule BitString() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	debug();
+    	return Sequence(
+    			WhiteSpace(),
+    			OneOrMore(Bit()),
+    			WhiteSpace(),
+    			ZeroOrMore(Bit(),WhiteSpace()));
+    			
     }
     
     /**
@@ -108,8 +132,26 @@ throw new ece351.util.Todo351Exception();
      */
     public Rule Bit() {       
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	debug();
+    	System.out.println("aceppt bit");
+    	return FirstOf('0','1');
     }
+    //TODO: New added rule, asked instructor on piazza.
+    public Rule Digit() {
+    	debug();
+    	System.out.println("aceppt digit");
+    	return CharRange('0', '9');
+    }
+    public Rule WhiteSpace() {
+    	debug();
+    	System.out.println("aceppt WhiteSpace");
+        return ZeroOrMore(AnyOf(" \t\f\n"));
+    }
+    boolean debug() {
+        System.out.println("."); // set breakpoint here if required
+        return true;
+    }
+
 
 }
 
