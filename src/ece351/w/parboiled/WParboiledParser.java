@@ -63,7 +63,9 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
     public Rule Program() {
         		// push empty WProgram
 // TODO: short code snippet
+		WProgram wpg = new WProgram();
 		return Sequence(
+				push(wpg),
 				OneOrMore(Waveform()),
 				EOI);
     }
@@ -80,17 +82,19 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
 // TODO: longer code snippet
     	return Sequence(
     			WhiteSpace(),
-    			push(ImmutableList.of()), //add a empty list
     			Name(),
-    			//peek(),
-				//push(1),
+    			push(match()),
+    			push(new Waveform ((String)pop())),
     			WhiteSpace(),
     			":",
     			WhiteSpace(),
     			BitString(),
     			WhiteSpace(),
     			";",
-    			WhiteSpace());
+    			WhiteSpace(),
+    			swap(),
+    			push(((WProgram)pop()).append((Waveform)pop()))
+    			);
     }
 
     /**
@@ -98,17 +102,11 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
      */
     public Rule Name() {
 // TODO: short code snippet
-    	String name = "";
     	return Sequence(
     			WhiteSpace(),
     			Letter(),
-    			name = match(),//first letter of the name
     			ZeroOrMore(
-    					FirstOf(Letter(),Digit(),"_")),
-    			name = name + match(),
-    			push(name),
-    			swap(),
-    			push( ((ImmutableList)pop()).append(pop()) )
+    					FirstOf(Letter(),Digit(),"_"))
     					);
     }
     
@@ -142,7 +140,12 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
     public Rule Bit() {   
         		// peek() = [Waveform, WProgram]
 // TODO: short code snippet
-    	return FirstOf('0','1');
+    	return Sequence(
+    			FirstOf('0','1'),
+    			push(match()),
+    			swap(),
+    			push(((Waveform)pop()).append((String)pop()))
+    			);
     }
     //TODO: New added rule, asked instructor on piazza.
     public Rule Digit() {
