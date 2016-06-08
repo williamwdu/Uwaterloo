@@ -81,17 +81,17 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
     			// peek() = [WProgram]
 // TODO: longer code snippet
     	return Sequence(
-    			WhiteSpace(),
+    			W0(),
     			Name(),
     			push(match()),
     			push(new Waveform ((String)pop())),
-    			WhiteSpace(),
+    			W0(),
     			":",
-    			WhiteSpace(),
+    			W0(),
     			BitString(),
-    			WhiteSpace(),
+    			W0(),
     			";",
-    			WhiteSpace(),
+    			W0(),
     			swap(),
     			push(((WProgram)pop()).append((Waveform)pop()))
     			);
@@ -103,7 +103,7 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
     public Rule Name() {
 // TODO: short code snippet
     	return Sequence(
-    			WhiteSpace(),
+    			W0(),
     			Letter(),
     			ZeroOrMore(
     					FirstOf(Letter(),Digit(),"_"))
@@ -125,10 +125,10 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
     public Rule BitString() {
 // TODO: short code snippet
     	return Sequence(
-    			WhiteSpace(),
+    			W0(),
     			OneOrMore(Bit()),
-    			WhiteSpace(),
-    			ZeroOrMore(Bit(),WhiteSpace()));
+    			W0(),
+    			ZeroOrMore(Bit(),W0()));
     			
     }
 
@@ -151,7 +151,7 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
     public Rule Digit() {
     	return CharRange('0', '9');
     }
-    public Rule WhiteSpace() {
+    public Rule Whitespace() {
         return ZeroOrMore(AnyOf(" \t\f\n"));
     }
 

@@ -78,15 +78,15 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
 // TODO: short code snippet
     	//debug();
     	return Sequence(
-    			WhiteSpace(),
+    			W0(),
     			Name(),
-    			WhiteSpace(),
+    			W0(),
     			":",
-    			WhiteSpace(),
+    			W0(),
     			BitString(),
-    			WhiteSpace(),
+    			W0(),
     			";",
-    			WhiteSpace());
+    			W0());
     }
 
     /**
@@ -97,7 +97,7 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
 // TODO: short code snippet
     	//debug();
     	return Sequence(
-    			WhiteSpace(),
+    			W0(),
     			Letter(),
     			ZeroOrMore(
     					FirstOf(Letter(),Digit(),"_")
@@ -122,10 +122,10 @@ public /*final*/ class WParboiledRecognizer extends BaseParser351 {
 // TODO: short code snippet
     	//debug();
     	return Sequence(
-    			WhiteSpace(),
+    			W0(),
     			OneOrMore(Bit()),
-    			WhiteSpace(),
-    			ZeroOrMore(Bit(),WhiteSpace()));
+    			W0(),
+    			ZeroOrMore(Bit(),W0()));
     			
     }
     
