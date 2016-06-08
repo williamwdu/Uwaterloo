@@ -63,7 +63,9 @@ public /*final*/ class WParboiledParser extends BaseParser351 {
     public Rule Program() {
         		// push empty WProgram
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+		return Sequence(
+				OneOrMore(Waveform()),
+				EOI);
     }
 
 	/**
@@ -76,7 +78,19 @@ throw new ece351.util.Todo351Exception();
     			// swap, pop, append, push
     			// peek() = [WProgram]
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+    	return Sequence(
+    			WhiteSpace(),
+    			push(ImmutableList.of()), //add a empty list
+    			Name(),
+    			//peek(),
+				//push(1),
+    			WhiteSpace(),
+    			":",
+    			WhiteSpace(),
+    			BitString(),
+    			WhiteSpace(),
+    			";",
+    			WhiteSpace());
     }
 
     /**
@@ -84,7 +98,18 @@ throw new ece351.util.Todo351Exception();
      */
     public Rule Name() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	String name = "";
+    	return Sequence(
+    			WhiteSpace(),
+    			Letter(),
+    			name = match(),//first letter of the name
+    			ZeroOrMore(
+    					FirstOf(Letter(),Digit(),"_")),
+    			name = name + match(),
+    			push(name),
+    			swap(),
+    			push( ((ImmutableList)pop()).append(pop()) )
+    					);
     }
     
     /**
@@ -93,7 +118,7 @@ throw new ece351.util.Todo351Exception();
      */
     public Rule Letter() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	return FirstOf(CharRange('a' , 'z' ), CharRange('A', 'Z'));
     }
 
     /**
@@ -101,8 +126,14 @@ throw new ece351.util.Todo351Exception();
      */
     public Rule BitString() {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	return Sequence(
+    			WhiteSpace(),
+    			OneOrMore(Bit()),
+    			WhiteSpace(),
+    			ZeroOrMore(Bit(),WhiteSpace()));
+    			
     }
+
     
     /**
      * A BitString is composed of a sequence of Bits. 
@@ -111,7 +142,14 @@ throw new ece351.util.Todo351Exception();
     public Rule Bit() {   
         		// peek() = [Waveform, WProgram]
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
+    	return FirstOf('0','1');
+    }
+    //TODO: New added rule, asked instructor on piazza.
+    public Rule Digit() {
+    	return CharRange('0', '9');
+    }
+    public Rule WhiteSpace() {
+        return ZeroOrMore(AnyOf(" \t\f\n"));
     }
 
 }
