@@ -24,37 +24,41 @@
  * 
  * ********************************************************************/
 
-package ece351.f;
+package ece351.f.parboiled;
 
-import ece351.f.ast.FProgram;
-import ece351.f.parboiled.FParboiledParser;
-//import ece351.f.parboiled.FParboiledParser;
-import ece351.f.rdescent.FRecursiveDescentParser;
-import ece351.util.CommandLine;
-import ece351.util.Lexer;
+import org.parboiled.Rule;
+import ece351.util.BaseParser351;
 
-public final class FParser {
+public abstract class FBase extends BaseParser351 {
 	
-    public static FProgram parse(final String[] args) {
-    	final CommandLine c = new CommandLine(args);
-    	return parse(c);
+    Rule Char() {
+        return FirstOf(CharRange('a', 'z'),
+                       CharRange('A', 'Z'));
+    }
+	
+    Rule Digit() {
+    	return CharRange('0', '9');
+    }
+	
+    public Rule Keyword() {
+        return FirstOf(AND(),
+                       OR(),
+                       NOT());
+    }
+	
+    public Rule AND() {
+        return Sequence(IgnoreCase("and"),
+                        TestNot(FirstOf(Char(),Digit(), "_")));
     }
 
-	public static FProgram parse(final CommandLine c) {
-		if (c.handparser) {
-    		return handParse(c.readInputSpec());
-    	} else {
-    		return parboiledParse(c.readInputSpec());
-    	}
-	}
-    
-    private static FProgram handParse(final String input) {
-        final Lexer lexer = new Lexer(input);
-        final FRecursiveDescentParser parser = new FRecursiveDescentParser(lexer);
-        return parser.parse();
+    public Rule OR() {
+        return Sequence(IgnoreCase("or"),
+                        TestNot(FirstOf(Char(),Digit(), "_")));
     }
-    
-    private static FProgram parboiledParse(final String input) {
-        return FParboiledParser.parse(input);
+
+    public Rule NOT() {
+        return Sequence(IgnoreCase("not"),
+                        TestNot(FirstOf(Char(),Digit(), "_")));
     }
+
 }

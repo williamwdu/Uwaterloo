@@ -24,37 +24,50 @@
  * 
  * ********************************************************************/
 
-package ece351.f;
+package ece351.f.parboiled;
 
-import ece351.f.ast.FProgram;
-import ece351.f.parboiled.FParboiledParser;
-//import ece351.f.parboiled.FParboiledParser;
-import ece351.f.rdescent.FRecursiveDescentParser;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import ece351.TestPrelab;
+import ece351.util.BaseTest351;
 import ece351.util.CommandLine;
-import ece351.util.Lexer;
+import ece351.util.TestInputs351;
 
-public final class FParser {
-	
-    public static FProgram parse(final String[] args) {
-    	final CommandLine c = new CommandLine(args);
-    	return parse(c);
-    }
 
-	public static FProgram parse(final CommandLine c) {
-		if (c.handparser) {
-    		return handParse(c.readInputSpec());
-    	} else {
-    		return parboiledParse(c.readInputSpec());
-    	}
+@RunWith(Parameterized.class)
+public final class TestFParboiledRecognizerReject extends BaseTest351 {
+
+	private final File f;
+
+	public TestFParboiledRecognizerReject(final File f) {
+		this.f = f;
 	}
-    
-    private static FProgram handParse(final String input) {
-        final Lexer lexer = new Lexer(input);
-        final FRecursiveDescentParser parser = new FRecursiveDescentParser(lexer);
-        return parser.parse();
-    }
-    
-    private static FProgram parboiledParse(final String input) {
-        return FParboiledParser.parse(input);
-    }
+
+	@Parameterized.Parameters
+	public static Collection<Object[]> files() {
+		return TestInputs351.badFormulaFiles();
+	}
+
+	@Test
+	public void reject() {
+		String inputSpec = f.getAbsolutePath();
+		final CommandLine c = new CommandLine(inputSpec);
+		final String input = c.readInputSpec();
+		try {
+			FParboiledRecognizer.main(input);
+			fail("should have rejected but didn't:  " + inputSpec);
+		} catch (final Exception e) {
+			System.out.println("rejected, as expected:  " + inputSpec);
+		}
+	}
+
+
 }

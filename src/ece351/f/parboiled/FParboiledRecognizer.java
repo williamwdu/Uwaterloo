@@ -24,37 +24,29 @@
  * 
  * ********************************************************************/
 
-package ece351.f;
+package ece351.f.parboiled;
 
-import ece351.f.ast.FProgram;
-import ece351.f.parboiled.FParboiledParser;
-//import ece351.f.parboiled.FParboiledParser;
-import ece351.f.rdescent.FRecursiveDescentParser;
+import org.parboiled.Rule;
+
+import ece351.common.ast.Constants;
 import ece351.util.CommandLine;
-import ece351.util.Lexer;
 
-public final class FParser {
+//Parboiled requires that this class not be final
+public /*final*/ class FParboiledRecognizer extends FBase implements Constants {
+
 	
-    public static FProgram parse(final String[] args) {
-    	final CommandLine c = new CommandLine(args);
-    	return parse(c);
+	public static void main(final String... args) {
+		final CommandLine c = new CommandLine(args);
+    	process(FParboiledRecognizer.class, c.readInputSpec());
     }
 
-	public static FProgram parse(final CommandLine c) {
-		if (c.handparser) {
-    		return handParse(c.readInputSpec());
-    	} else {
-    		return parboiledParse(c.readInputSpec());
-    	}
+	@Override
+	public Rule Program() {
+		// STUB: return NOTHING; // TODO: replace this stub
+		// For the grammar production Id, ensure that the Id does not match any of the keywords specified
+		// in the rule, 'Keyword'
+// TODO: longer code snippet
+throw new ece351.util.Todo351Exception();
 	}
-    
-    private static FProgram handParse(final String input) {
-        final Lexer lexer = new Lexer(input);
-        final FRecursiveDescentParser parser = new FRecursiveDescentParser(lexer);
-        return parser.parse();
-    }
-    
-    private static FProgram parboiledParse(final String input) {
-        return FParboiledParser.parse(input);
-    }
+
 }
