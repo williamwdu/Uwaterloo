@@ -27,6 +27,7 @@
 package ece351.f;
 
 import ece351.f.ast.FProgram;
+import ece351.f.parboiled.FParboiledParser;
 //import ece351.f.parboiled.FParboiledParser;
 import ece351.f.rdescent.FRecursiveDescentParser;
 import ece351.util.CommandLine;
@@ -54,7 +55,6 @@ public final class FParser {
     }
     
     private static FProgram parboiledParse(final String input) {
-        // return FParboiledParser.parse(input);
-        throw new UnsupportedOperationException("FParboiledParser not available until Lab5");
+        return FParboiledParser.parse(input);
     }
 }
