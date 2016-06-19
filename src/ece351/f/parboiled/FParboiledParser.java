@@ -38,6 +38,7 @@ import ece351.common.ast.OrExpr;
 import ece351.common.ast.VarExpr;
 import ece351.f.ast.FProgram;
 import ece351.util.CommandLine;
+import ece351.w.ast.WProgram;
 
 // Parboiled requires that this class not be final
 public /*final*/ class FParboiledParser extends FBase implements Constants {
@@ -75,7 +76,104 @@ public /*final*/ class FParboiledParser extends FBase implements Constants {
 
 	@Override
 	public Rule Program() {
-// TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+		//System.out.println("Program");
+		FProgram fp = new FProgram();
+		return Sequence(
+				push(fp),
+				OneOrMore(Sequence(Formula(),swap(),push(((FProgram)pop()).append((AssignmentStatement)pop())))),
+				EOI);
 	}
+	public Rule Formula(){
+		//System.out.println("Formula");
+		return Sequence(
+				W0(),
+    			Var(),
+    			push(new VarExpr((String)pop())),
+    			W0(),
+    			"<=",
+    			W0(),
+    			Expr(),
+    			W0(),
+    			";",
+    			W0(),
+    			swap(),
+    			push(new AssignmentStatement((VarExpr)pop(),(Expr)pop())))
+				;
+	}
+	public Rule Expr(){
+		//System.out.println("Expr");
+		Expr expr = new OrExpr();
+		return Sequence(
+				W0(),
+				//push(expr),
+    			Term(),
+    			W0(),
+    			ZeroOrMore(Sequence(W0(),
+    					"or",
+    					W0(),
+    					Term(),
+    					swap(),
+    					push(new OrExpr((Expr)pop(),(Expr)pop())
+    					)))
+				);
+	}
+	public Rule Term(){
+		//System.out.println("Term");
+		Expr expr = new AndExpr(); 
+		return Sequence(
+				W0(),
+    			Factor(),
+    			W0(),
+    			ZeroOrMore(Sequence(W0(),
+    					"and",
+    					W0(),
+    					Factor(),
+    					swap(),
+    					push(new AndExpr((Expr)pop(),(Expr)pop()))))
+				);
+	}
+	public Rule Factor(){
+		//System.out.println("Factor");
+		Expr expr = new NotExpr();
+		return Sequence(
+				W0(),
+				FirstOf(
+						Sequence(
+								W0(),
+								"not",
+								W0(),
+								Factor(),
+								push(new NotExpr((Expr)pop()))),
+						Sequence(
+								W0(),
+								"(",
+								W0(),
+								Expr(),
+								W0(),
+								")"),
+						Sequence(Var(),
+						push(new VarExpr((String)pop()))),
+						Constant()
+						)
+				);
+	}
+	public Rule Constant(){
+		//System.out.println("Constant");
+		return 	FirstOf(Sequence("'0'",push(ConstantExpr.FalseExpr)),
+				Sequence("'1'",push(ConstantExpr.TrueExpr)));
+	}
+	public Rule Var(){
+		//System.out.println("Var");
+		return Sequence(
+				W0(),
+				Id(),
+				push(match()),
+				W0()
+				);
+	}
+    public Rule Id() {
+    //System.out.println("Id");
+	return FirstOf(CharRange('a' , 'z' ), CharRange('A', 'Z'));
+    }
+
 }
