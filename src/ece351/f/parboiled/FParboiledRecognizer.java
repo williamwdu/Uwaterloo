@@ -42,11 +42,72 @@ public /*final*/ class FParboiledRecognizer extends FBase implements Constants {
 
 	@Override
 	public Rule Program() {
-		// STUB: return NOTHING; // TODO: replace this stub
-		// For the grammar production Id, ensure that the Id does not match any of the keywords specified
-		// in the rule, 'Keyword'
-// TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+		//System.out.println("Program");
+		return Sequence(
+				OneOrMore(Formula()),
+				EOI);
 	}
+	public Rule Formula(){
+		//System.out.println("Formula");
+		return Sequence(
+				W0(),
+    			Var(),
+    			W0(),
+    			"<=",
+    			W0(),
+    			Expr(),
+    			W0(),
+    			";",
+    			W0()
+				);
+	}
+	public Rule Expr(){
+		//System.out.println("Expr");
+		return Sequence(
+				W0(),
+    			Term(),
+    			W0(),
+    			ZeroOrMore(Sequence(W0(),"or",W0(),Term()))
+				);
+	}
+	public Rule Term(){
+		//System.out.println("Term");
+		return Sequence(
+				W0(),
+    			Factor(),
+    			W0(),
+    			ZeroOrMore(Sequence(W0(),"and",W0(),Factor()))
+				);
+	}
+	public Rule Factor(){
+		//System.out.println("Factor");
+		return Sequence(
+				W0(),
+				FirstOf(
+						Sequence(W0(),"not",W0(),Factor()),
+						Sequence(W0(),"(",W0(),Expr(),W0(),")"),
+						Var(),
+						Constant()
+						)
+				);
+	}
+	public Rule Constant(){
+		//System.out.println("Constant");
+		return 	FirstOf("'0'","'1'");
+	}
+	public Rule Var(){
+		//System.out.println("Var");
+		return Sequence(
+				W0(),
+				Id(),
+				W0()
+				);
+	}
+    public Rule Id() {
+    //System.out.println("Id");
+	return FirstOf(CharRange('a' , 'z' ), CharRange('A', 'Z'));
+    }
+
+	
 
 }
