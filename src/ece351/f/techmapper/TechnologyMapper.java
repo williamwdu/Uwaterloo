@@ -133,7 +133,7 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 		// print nodes
 		// print edges
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+//throw new ece351.util.Todo351Exception();
 		// print footer
 		footer(out);
 		out.flush();
