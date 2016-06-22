@@ -27,6 +27,7 @@
 package ece351.f.techmapper;
 
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -121,16 +122,54 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 	/** Where the real work happens. */
 	public void render(final FProgram program, final Examiner examiner) {
 		header(out);
-		
+	
 		// build a set of all of the exprs in the program
+		/*
+		for (AssignmentStatement c : program.formulas){
+			ExtractAllExprs.(c.expr);
+			ExtractAllExprs(c.outputVar);
+		}
+		*/
+		IdentityHashSet <Expr> allexpr = ExtractAllExprs.allExprs(program);		
 		// build substitutions by determining equivalences of exprs
+		
+		// to array 
+		Object[] array =  allexpr.toArray();
+		for (int i = 0; i < array.length; i++){
+			Expr c = (Expr) array[i];
+			for (int j=i; j<array.length; j++){
+				if (c.equals((Expr)array[j])){
+					if (substitutions.containsKey((Expr)array[j])){
+						
+					}
+					else{
+					substitutions.put((Expr)array[j], (Expr)array[i]);
+					}
+				}
+			}
+		}
+										
 		// create nodes for output vars
+		for (AssignmentStatement c : program.formulas){
+			visitVar(c.outputVar);			
+		}
+		
+		
+		
 		// attach images to gates
 		// ../../gates/not_noleads.png
 		// ../../gates/or_noleads.png
 		// ../../gates/and_noleads.png
+		
+		
+		
+		
 		// compute edges
+		
+		
+		
 		// print nodes
+		
 		// print edges
 // TODO: longer code snippet
 //throw new ece351.util.Todo351Exception();
@@ -188,27 +227,33 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 	@Override
 	public Expr visitAnd(final AndExpr e) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
-		// return e;
+		edge(e.left,e);
+		edge(e.right,e);
+		return e;
 	}
 
 	@Override
 	public Expr visitOr(final OrExpr e) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
-		// return e;
+		edge(e.left,e);
+		edge(e.right,e);
+		return e;
 	}
 	
 	@Override public Expr visitNaryAnd(final NaryAndExpr e) {
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
-		// return e;
+		for (final Expr c : e.children ){
+			edge(c,e);
+		}
+		return e;
 	}
 
 	@Override public Expr visitNaryOr(final NaryOrExpr e) { 
 // TODO: short code snippet
-throw new ece351.util.Todo351Exception();
-		// return e;
+		for (final Expr c : e.children){
+			edge(c,e);
+		}
+		return e;
 	}
 
 
