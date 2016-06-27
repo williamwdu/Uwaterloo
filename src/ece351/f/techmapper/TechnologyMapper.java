@@ -160,13 +160,18 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 		// ../../gates/not_noleads.png
 		// ../../gates/or_noleads.png
 		// ../../gates/and_noleads.png
-		
+		for (Expr ex: allexpr){
+			//do something
+			//if (ex.getClass() = )
+		}
 		
 		
 		
 		// compute edges
-		
-		
+		for (AssignmentStatement c : program.formulas){
+			traverseAssignmentStatement(c);
+			traverseExpr(c.expr);		
+		}		
 		
 		// print nodes
 		
