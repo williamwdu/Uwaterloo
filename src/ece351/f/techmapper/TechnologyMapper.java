@@ -138,7 +138,7 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 		for (int i = 0; i < array.length; i++){
 			Expr c = (Expr) array[i];
 			for (int j=i; j<array.length; j++){
-				if (c.equals((Expr)array[j])){
+				if (c.isomorphic((Expr)array[j])){
 					if (substitutions.containsKey((Expr)array[j])){
 						
 					}
@@ -160,25 +160,41 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 		// ../../gates/not_noleads.png
 		// ../../gates/or_noleads.png
 		// ../../gates/and_noleads.png
-		for (Expr ex: allexpr){
-			//do something
-			//if (ex.getClass() = )
+		for (Expr c: allexpr){
+			if (c instanceof NaryAndExpr){
+				Expr subs = substitutions.get(c);
+				node(subs.serialNumber(), subs.toString(), "../../and_noleads.png");
+			}
+			else if(c instanceof NaryOrExpr){
+				Expr subs = substitutions.get(c);
+				node(subs.serialNumber(), subs.toString(), "../../or_noleads.png");
+
+			}
 		}
 		
 		
 		
 		// compute edges
+		/*
 		for (AssignmentStatement c : program.formulas){
 			traverseAssignmentStatement(c);
 			traverseExpr(c.expr);		
-		}		
+		}
+		*/
+		//for (substitutions)
+		//node(expr.serialNumber(), expr.toString(), "and_noleads");
+		traverseFProgram(program);
 		
 		// print nodes
-		
 		// print edges
-// TODO: longer code snippet
-//throw new ece351.util.Todo351Exception();
 		// print footer
+		for (String s : nodes){
+			out.println(s);
+		}
+		for (String s: edges){
+			out.println(s);
+		}
+		//out.println(substitutions);
 		footer(out);
 		out.flush();
 		
