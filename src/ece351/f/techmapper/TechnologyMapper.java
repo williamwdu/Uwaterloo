@@ -175,16 +175,18 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 		
 		
 		// compute edges
-		/*
-		for (AssignmentStatement c : program.formulas){
-			traverseAssignmentStatement(c);
-			traverseExpr(c.expr);		
-		}
-		*/
+		
+		
+		
 		//for (substitutions)
 		//node(expr.serialNumber(), expr.toString(), "and_noleads");
 		traverseFProgram(program);
-		
+		for (AssignmentStatement c : program.formulas){
+			Expr topExpr = c.expr;
+			Expr targetExpr = c.outputVar;
+			Expr subs = substitutions.get(topExpr);	
+			edge(subs,targetExpr);
+		}
 		// print nodes
 		// print edges
 		// print footer
