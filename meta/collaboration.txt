@@ -18,7 +18,7 @@ lab3 converser nobody
 lab4 converser nobody
 lab5 converser nobody
 lab6 converser nobody
-lab7 role userid
+lab7 converser nobody
 lab8 role userid
 lab9 role userid
 lab10 role userid
