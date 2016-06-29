@@ -163,11 +163,11 @@ public final class TechnologyMapper extends PostOrderExprVisitor {
 		for (Expr c: allexpr){
 			if (c instanceof NaryAndExpr){
 				Expr subs = substitutions.get(c);
-				node(subs.serialNumber(), subs.toString(), "../../and_noleads.png");
+				node(subs.serialNumber(), subs.serialNumber(), "../../and_noleads.png");
 			}
 			else if(c instanceof NaryOrExpr){
 				Expr subs = substitutions.get(c);
-				node(subs.serialNumber(), subs.toString(), "../../or_noleads.png");
+				node(subs.serialNumber(), subs.serialNumber(), "../../or_noleads.png");
 
 			}
 		}
