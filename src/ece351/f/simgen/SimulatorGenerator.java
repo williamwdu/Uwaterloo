@@ -125,14 +125,14 @@ public final class SimulatorGenerator extends ExprVisitor {
 		println("// write the input");
 		println("// write the output");
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+//throw new ece351.util.Todo351Exception();
 		// end main method
 		outdent();
 		println("}");
 		
 		println("// methods to compute values for output pins");
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+//throw new ece351.util.Todo351Exception();
 		// end class
 		outdent();
 		println("}");
@@ -219,7 +219,7 @@ throw new ece351.util.Todo351Exception();
 		b.append("(");
 		// loop over f's input variables
 // TODO: longer code snippet
-throw new ece351.util.Todo351Exception();
+//throw new ece351.util.Todo351Exception();
 		b.append(")");
 		return b.toString();
 	}
