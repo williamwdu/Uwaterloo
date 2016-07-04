@@ -95,7 +95,6 @@ public final class SimulatorGenerator extends ExprVisitor {
 		this.out = out;
 		final String cleanFName = fName.replace('-', '_');
 		final SortedSet<String> allinputVar =  DetermineInputVars.inputVars(program);
-
 		// header
 		println("import java.util.*;");
 		println("import ece351.w.ast.*;");
@@ -113,7 +112,6 @@ public final class SimulatorGenerator extends ExprVisitor {
 		indent();
 		println("public static void main(final String[] args) {");
 		indent();
-		
 		println("// read the input F program");
 		println("// write the output");
 		println("// read input WProgram");
@@ -125,15 +123,62 @@ public final class SimulatorGenerator extends ExprVisitor {
 		println("// construct storage for output");
 		//adding
 		println("final Map<String,StringBuilder> output = new LinkedHashMap<String,StringBuilder>();");
+		for (AssignmentStatement asmt: program.formulas){
+			println("output.put(\""+ asmt.outputVar.identifier + "\", new StringBuilder());");
+		}
 		//added above
 		println("// loop over each time step");
+		println("final int timeCount = wprogram.timeCount();");
+		println("for (int time = 0; time < timeCount; time++) {");
+		indent();
 		println("// values of input variables at this time step");
+		for (String inputexpr: allinputVar){
+			println("final boolean in_"+ inputexpr + " = wprogram.valueAtTime(\"" + inputexpr + "\", time);");
+		}
 		println("// values of output variables at this time step");
+		for (AssignmentStatement asmt: program.formulas){
+			Set<String> assignmentstatementinputs = DetermineInputVars.inputVars(asmt);
+			final StringBuilder b = new StringBuilder();
+			b.append("final String out_" + asmt.outputVar.identifier + "= " + asmt.outputVar.identifier + "(");
+			if (!assignmentstatementinputs.isEmpty()){
+			for (String s:assignmentstatementinputs){
+				b.append("in_" + s +",");
+			}
+			b.setLength(Math.max(b.length() - 1, 0));
+			}
+			b.append(") ? \"1\" : \"0\";");
+			println(b.toString());
+		}
 		println("// store outputs");
+		for (AssignmentStatement asmt: program.formulas){
+			println("output.get(\""+asmt.outputVar.identifier+"\").append(out_"+asmt.outputVar.identifier+");");
+		}
 		// end the time step loop
 		// boilerplate
+		outdent();
+		println("}");
+		println("try{");
+		indent();
+		println("final File f = cmd.getOutputFile();");
+		println("f.getParentFile().mkdirs();");
+		println("final PrintWriter pw = new PrintWriter(new FileWriter(f));");
 		println("// write the input");
+		println("System.out.println(wprogram.toString());");
+		println("pw.println(wprogram.toString());");
 		println("// write the output");
+		println("System.out.println(f.getAbsolutePath());");
+		println("for (final Map.Entry<String,StringBuilder> e : output.entrySet()) {");
+		indent();
+		println("System.out.println(e.getKey() + \":\" + e.getValue().toString()+ \";\");");
+		println("pw.write(e.getKey() + \":\" + e.getValue().toString()+ \";\\n\");");
+		println("}");
+		println("pw.close();");
+		outdent();
+		println("} catch (final IOException e) {");
+		indent();
+		println("Debug.barf(e.getMessage());");
+		outdent();
+		println("}");
 // TODO: longer code snippet
 //throw new ece351.util.Todo351Exception();
 		// end main method
@@ -235,9 +280,7 @@ public final class SimulatorGenerator extends ExprVisitor {
 		final StringBuilder b = new StringBuilder();
 		Set<String> inputs = DetermineInputVars.inputVars(f);
 		String prefix = "final boolean ";
-		if (signature) {
-			b.append("public static boolean ");
-		}
+		b.append("public static boolean ");
 		b.append(f.outputVar);
 		b.append("(");
 		for (String s : inputs) {

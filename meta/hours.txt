@@ -13,6 +13,6 @@ lab4 15
 lab5 7
 lab6 3
 lab7 10
-lab8 0
+lab8 5
 lab9 0
 lab10 0
