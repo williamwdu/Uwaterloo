@@ -28,6 +28,7 @@ package ece351.f.simgen;
 
 import java.io.PrintWriter;
 import java.util.Set;
+import java.util.SortedSet;
 
 import ece351.common.ast.AndExpr;
 import ece351.common.ast.AssignmentStatement;
@@ -93,7 +94,8 @@ public final class SimulatorGenerator extends ExprVisitor {
 	public void generate(final String fName, final FProgram program, final PrintWriter out) {
 		this.out = out;
 		final String cleanFName = fName.replace('-', '_');
-		
+		final SortedSet<String> allinputVar =  DetermineInputVars.inputVars(program);
+
 		// header
 		println("import java.util.*;");
 		println("import ece351.w.ast.*;");
@@ -119,8 +121,11 @@ public final class SimulatorGenerator extends ExprVisitor {
 		println("final CommandLine cmd = new CommandLine(args);");
 		println("final String input = cmd.readInputSpec();");
 		println("final WProgram wprogram = WParboiledParser.parse(input);");
-		//adding
+		//added above
 		println("// construct storage for output");
+		//adding
+		println("final Map<String,StringBuilder> output = new LinkedHashMap<String,StringBuilder>();");
+		//added above
 		println("// loop over each time step");
 		println("// values of input variables at this time step");
 		println("// values of output variables at this time step");
@@ -138,6 +143,17 @@ public final class SimulatorGenerator extends ExprVisitor {
 		println("// methods to compute values for output pins");
 // TODO: longer code snippet
 //throw new ece351.util.Todo351Exception();
+		for (AssignmentStatement asmt: program.formulas){
+			Set<String> inputs = DetermineInputVars.inputVars(asmt);	
+		if (inputs.isEmpty()){
+			print(generateCall(asmt));
+		}
+		else{
+		print(generateSignature(asmt));
+		}
+		traverseAssignmentStatement(asmt);
+		println(";}");
+		}
 		// end class
 		outdent();
 		println("}");
@@ -217,15 +233,24 @@ public final class SimulatorGenerator extends ExprVisitor {
 
 	private String generateList(final AssignmentStatement f, final boolean signature) {
 		final StringBuilder b = new StringBuilder();
+		Set<String> inputs = DetermineInputVars.inputVars(f);
+		String prefix = "final boolean ";
 		if (signature) {
 			b.append("public static boolean ");
 		}
 		b.append(f.outputVar);
 		b.append("(");
+		for (String s : inputs) {
+		    b.append(prefix+s+", ");
+		}
+		if (signature){
+		b.setLength(Math.max(b.length() - 2, 0));
+		}
 		// loop over f's input variables
 // TODO: longer code snippet
 //throw new ece351.util.Todo351Exception();
 		b.append(")");
+		b.append("{ return ");
 		return b.toString();
 	}
 
