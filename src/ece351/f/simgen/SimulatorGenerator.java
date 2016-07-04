@@ -115,6 +115,11 @@ public final class SimulatorGenerator extends ExprVisitor {
 		println("// read the input F program");
 		println("// write the output");
 		println("// read input WProgram");
+		//adding
+		println("final CommandLine cmd = new CommandLine(args);");
+		println("final String input = cmd.readInputSpec();");
+		println("final WProgram wprogram = WParboiledParser.parse(input);");
+		//adding
 		println("// construct storage for output");
 		println("// loop over each time step");
 		println("// values of input variables at this time step");
