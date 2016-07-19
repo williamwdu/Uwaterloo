@@ -1,0 +1,6 @@
+test_suite,good,bad,mark
+ece351.w.parboiled.TestWParboiledParserAccept,31,0,30.00
+ece351.w.parboiled.TestWParboiledParserBasic,1,0,5.00
+ece351.w.parboiled.TestWParboiledParserReject,8,0,10.00
+ece351.w.parboiled.TestWParboiledRecognizerAccept,31,0,20.00
+ece351.w.parboiled.TestWParboiledRecognizerReject,8,0,5.00

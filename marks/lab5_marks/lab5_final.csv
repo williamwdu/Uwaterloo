@@ -1,0 +1,7 @@
+test_suit,mark
+ece351.w.parboiled.TestWParboiledParserAccept,45.00
+ece351.w.parboiled.TestWParboiledParserBasic,5.00
+ece351.w.parboiled.TestWParboiledParserReject,15.00
+ece351.w.parboiled.TestWParboiledRecognizerAccept,25.00
+ece351.w.parboiled.TestWParboiledRecognizerReject,10.00
+Total,100.00
