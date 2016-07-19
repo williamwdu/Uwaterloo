@@ -52,9 +52,13 @@ import ece351.common.visitor.PostOrderExprVisitor;
 import ece351.f.analysis.DepthCounter;
 import ece351.f.analysis.DetermineInputVars;
 import ece351.f.ast.FProgram;
+import ece351.util.OSDetect;
 import ece351.w.ast.WProgram;
 
 public class SimulatorGenerator_x86_64 extends PostOrderExprVisitor {
+
+	/** Name of putchar function. On Mac it is prepended with underscore. */
+	private static final String PUTCHAR = (OSDetect.isMac() ? "_" : "") + "putchar";
 
 	/** Where the generated code gets written to. */
 	private PrintWriter out = new PrintWriter(System.out);
@@ -221,7 +225,10 @@ throw new ece351.util.Todo351Exception();
 	private void genFuncHeader(final String name, final int depth)
 	{
 		println(".globl\t" + name);
-		println(".type\t" + name + ", @function");
+		if (!OSDetect.isWindows()) {
+			// Windows does not seem to like these type declarations
+			println(".type\t" + name + ", @function");
+		}
 		outdent();
 		outdent();
 		println(name + ":");
@@ -247,7 +254,7 @@ throw new ece351.util.Todo351Exception();
 // TODO: short code snippet
 throw new ece351.util.Todo351Exception();
 		println("add", "$48", "%rdi"); // char for 0 is ASCII 48
-		println("call", "putchar");
+		println("call", PUTCHAR);
 	}
 
 	private void functionCall(final AssignmentStatement stmt) {
@@ -266,7 +273,7 @@ throw new ece351.util.Todo351Exception();
 
 	private void genx86PutChar(final char ch) {
 		println("movq", "$" + (int)ch, "%rdi");
-		println("call", "putchar");
+		println("call", PUTCHAR);
 	}
 	
 	private void println(final String s) {
