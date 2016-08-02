@@ -1,0 +1,7 @@
+test_suit,mark
+ece351.f.parboiled.TestFParboiledParser,50.00
+ece351.f.parboiled.TestFParboiledParserBasic,5.00
+ece351.f.parboiled.TestFParboiledRecognizerAccept,15.00
+ece351.f.parboiled.TestFParboiledRecognizerReject,5.00
+ece351.f.parboiled.TestFParserComparison,25.00
+Total,100.00
